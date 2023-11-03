@@ -1,0 +1,26 @@
+name: hop_video_player
+description: Vimeo and youtube player for flutter, Hop Video player provides customizable video player controls that support android, ios and web.
+version: 0.2.1
+homepage: https://github.com/newtaDev/hop_video_player
+
+environment:
+  sdk: ">=2.17.0 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # services
+  video_player: ^2.7.0
+  http: ^1.1.0
+  get: ^4.6.5
+  wakelock_plus: ^1.1.1
+  universal_html: ^2.2.3
+  youtube_explode_dart: ^2.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^5.0.0+1
+
+
