@@ -8,8 +8,9 @@ class _HopVideoController extends _HopUiController {
   bool isLooping = false;
   bool isFullScreen = false;
   bool isvideoPlaying = false;
-  bool isSeekForward = false;
-  bool isSeekBackword = false;
+
+  void Function({required Duration seekStartDuration, required Duration seekEndDuration})? onSeekForward;
+  void Function({required Duration seekStartDuration, required Duration seekEndDuration})? onSeekBackward;
 
    void Function(Duration duration)? onDragStart;
    void Function(Duration duration)? onDragEnd;
@@ -39,19 +40,20 @@ class _HopVideoController extends _HopUiController {
 
   /// Seek video forward by the duration.
   Future<void> seekForward(Duration videoSeekDuration) async {
-    isSeekForward = true;
-    update();
+    if(onSeekForward != null){
+      onSeekForward?.call(seekEndDuration: _videoCtr!.value.position+ videoSeekDuration ,seekStartDuration: _videoCtr!.value.position);
+    }
     await seekTo(_videoCtr!.value.position + videoSeekDuration);
-    isSeekForward = false;
     update();
   }
 
   /// Seek video backward by the duration.
   Future<void> seekBackward(Duration videoSeekDuration) async {
-    isSeekBackword = true;
-    update();
+    if(onSeekBackward != null){
+      onSeekBackward?.call(seekEndDuration: _videoCtr!.value.position-videoSeekDuration ,seekStartDuration: _videoCtr!.value.position);
+    }
     await seekTo(_videoCtr!.value.position - videoSeekDuration);
-    isSeekBackword = false;
+
     update();
   }
 

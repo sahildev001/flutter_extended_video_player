@@ -45,19 +45,21 @@ class _CustomVideoControllsState extends State<CustomVideoControlls> {
       isVideoPlaying = controller.isVideoPlaying;
     }
 
-    if(controller.isSeekBackword){
-    print("skip backword called ${controller.currentVideoPosition.inMicroseconds}   -- ${controller.totalVideoLength}");
-    }
-    if(controller.isSkipForward){
-      print("skip forward called ${controller.currentVideoPosition.inMicroseconds}   -- ${controller.totalVideoLength}");
 
-    }
-    
+    controller.onSeekForward = onSeekForward;
+    controller.onSeekBackward = onSeekBackward;
     controller.onDragStart = onDragStart;
     controller.onDragEnd = onDragEnd;
 
 
     if (mounted) setState(() {});
+  }
+
+  onSeekForward({required Duration seekStartDuration, required Duration seekEndDuration}){
+
+  }
+  onSeekBackward({required Duration seekStartDuration, required Duration seekEndDuration}){
+
   }
   onDragStart(Duration duration){
   log("sahil:: ---- onDtag start ",error: "${duration.inSeconds}");

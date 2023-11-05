@@ -91,14 +91,18 @@ class HopVideoPlayerController {
   /// returns true if video is playing
   bool get isVideoPlaying => _ctr.videoCtr?.value.isPlaying ?? false;
 
-  /// returns true if user skipping video forward
-  bool get isSkipForward => _ctr.isSeekForward;
-  /// returns true if user skipping video backward
-  bool get isSeekBackword => _ctr.isSeekBackword;
+  void set onSeekForward(  void Function({required Duration seekStartDuration, required Duration seekEndDuration})?  newValue) {
+    _ctr.onSeekForward = newValue;
+  }
+  void set onSeekBackward(  void Function({required Duration seekStartDuration, required Duration seekEndDuration})?  newValue) {
+    _ctr.onSeekBackward = newValue;
+  }
+
 
   void set onDragStart(void Function(Duration duration)? newValue) {
     _ctr.onDragStart = newValue;
   }
+
 
   void set onDragEnd(void Function(Duration duration)? newValue) {
     _ctr.onDragEnd = newValue;
