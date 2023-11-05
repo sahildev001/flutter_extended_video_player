@@ -69,8 +69,8 @@ class _HopProgressBarState extends State<HopProgressBar> {
                 if (_controllerWasPlaying) {
                   hopCtr.videoCtr?.pause();
                 }
-         if (widget.onDragStart != null) {
-           widget.onDragStart!(hopCtr.videoPosition);
+               if (widget.onDragStart != null) {
+                   widget.onDragStart?.call(hopCtr.videoPosition);
                 }
               },
               onHorizontalDragUpdate: (DragUpdateDetails details) {
@@ -81,7 +81,7 @@ class _HopProgressBarState extends State<HopProgressBar> {
                 seekToRelativePosition(details.globalPosition);
 
                 if(widget.onDragUpdate != null) {
-                  widget.onDragUpdate!(hopCtr.videoPosition);
+                  widget.onDragUpdate?.call(hopCtr.videoPosition);
                 }
               },
               onHorizontalDragEnd: (DragEndDetails details) {
@@ -91,7 +91,7 @@ class _HopProgressBarState extends State<HopProgressBar> {
                 hopCtr.toggleVideoOverlay();
 
                 if (widget.onDragEnd != null) {
-                  widget.onDragEnd!(hopCtr.videoPosition);
+                  widget.onDragEnd?.call(hopCtr.videoPosition);
                 }
               },
               onTapDown: (TapDownDetails details) {

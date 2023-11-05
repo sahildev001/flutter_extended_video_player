@@ -183,16 +183,21 @@ class HopVideoPlayerController {
 
   ///Dispose Hop video player controller
   void dispose() {
-    _isCtrInitialised = false;
-    _ctr.videoCtr?.removeListener(_ctr.videoListner);
-    _ctr.videoCtr?.dispose();
-    _ctr.removeListenerId('hopVideoPlayerVideoState', _ctr.hopVideoStateListner);
-    if (hopPlayerConfig.wakelockEnabled) WakelockPlus.disable();
-    Get.delete<HopVideoPlayerGetXVideoController>(
-      force: true,
-      tag: getTag,
-    );
-    HopVideoPlayerLog('$getTag Hop player Disposed');
+    try {
+      _isCtrInitialised = false;
+      _ctr.videoCtr?.removeListener(_ctr.videoListner);
+      _ctr.videoCtr?.dispose();
+      _ctr.removeListenerId(
+          'hopVideoPlayerVideoState', _ctr.hopVideoStateListner);
+      if (hopPlayerConfig.wakelockEnabled) WakelockPlus.disable();
+      Get.delete<HopVideoPlayerGetXVideoController>(
+        force: true,
+        tag: getTag,
+      );
+      HopVideoPlayerLog('$getTag Hop player Disposed');
+    }catch(e){
+      HopVideoPlayerLog('error on dispose $e');
+    }
   }
 
   /// used to change the video
