@@ -43,11 +43,15 @@ class _HopVideoBaseController extends GetxController {
     if (!_videoCtr!.value.isInitialized) {
       await _videoCtr!.initialize();
     }
+
     if (_videoCtr!.value.isInitialized) {
       // _listneToVideoState();
       _listneToVideoPosition();
       _listneToVolume();
       if (kIsWeb && autoPlay && isMute && !_isWebAutoPlayDone) _webAutoPlay();
+    }
+    if(_videoCtr!.value.isCompleted){
+      hopVideoStateChanger(HopVideoPlayerVideoState.finished);
     }
   }
 

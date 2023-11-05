@@ -3,6 +3,7 @@ enum HopVideoPlayerVideoState {
   playing,
   paused,
   error,
+  finished
 }
 
 enum HopVideoPlayerType {

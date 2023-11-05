@@ -113,6 +113,15 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                           );
                         case HopVideoPlayerVideoState.error:
                           return const SizedBox();
+                        case HopVideoPlayerVideoState.finished:
+                         return const Center(
+                            child: Icon(
+                              Icons.replay,
+                              size: 45,
+                              color: Colors.white,
+                            ),
+                          );
+                          break;
                       }
                     } else {
                       if (hopCtr.hopVideoPlayerVideoState == HopVideoPlayerVideoState.loading) {
