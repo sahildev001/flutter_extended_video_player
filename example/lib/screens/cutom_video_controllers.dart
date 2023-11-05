@@ -92,7 +92,18 @@ class _CustomVideoControllsState extends State<CustomVideoControlls> {
         .padLeft(2, '0');
 
     ///
-
+   var videoTitle = Padding(
+      padding:  EdgeInsets.only(left: 15),
+      child: Text(
+        "Hop Video title",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
     const textStyle = TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.bold,
