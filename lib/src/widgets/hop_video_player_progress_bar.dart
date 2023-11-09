@@ -67,6 +67,7 @@ class _HopProgressBarState extends State<HopProgressBar> {
                     hopCtr.videoCtr?.value.isPlaying ?? false;
 
                 if (_controllerWasPlaying) {
+
                   hopCtr.videoCtr?.pause();
                 }
                if (widget.onDragStart != null) {

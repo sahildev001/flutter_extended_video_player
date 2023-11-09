@@ -37,6 +37,7 @@ class _AnimatedPlayPauseIconState extends State<_AnimatedPlayPauseIcon>
         if (mounted) _payCtr.forward();
       }
       if (_hopCtr.hopVideoPlayerVideoState == HopVideoPlayerVideoState.paused) {
+
         if (mounted) _payCtr.reverse();
       }
     });

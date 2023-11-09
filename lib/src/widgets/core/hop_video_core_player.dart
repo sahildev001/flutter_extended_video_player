@@ -144,7 +144,7 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                           builder: (hopCtr) {
                             var check = hopCtr.isOverlayVisible ||
                                 !hopCtr.alwaysShowProgressBar;
-                            print("-----sahil --------- check ${check}");
+                           // print("-----sahil --------- check ${check}");
                             return check
                               ? const SizedBox()
                               : Align(
@@ -154,9 +154,6 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                                     alignment: Alignment.bottomCenter,
                                     hopProgressBarConfig:
                                         hopCtr.hopProgressBarConfig,
-                                    onDragStart: (Duration duration){
-                                      print("sahil 5::------------------------${duration.inSeconds}-----");
-                                    },
                                   ),
                                 );
       }

@@ -271,6 +271,9 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
         if (hopPlayerConfig.wakelockEnabled) WakelockPlus.disable();
         playVideo(false);
         break;
+      case HopVideoPlayerVideoState.finished:
+        // TODO: Handle this case.
+        break;
     }
   }
 

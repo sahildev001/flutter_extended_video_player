@@ -50,8 +50,10 @@ class _HopVideoBaseController extends GetxController {
       _listneToVolume();
       if (kIsWeb && autoPlay && isMute && !_isWebAutoPlayDone) _webAutoPlay();
     }
+
     if(_videoCtr!.value.isCompleted){
       hopVideoStateChanger(HopVideoPlayerVideoState.finished);
+      hopVideoStateChanger(HopVideoPlayerVideoState.paused);
     }
   }
 
