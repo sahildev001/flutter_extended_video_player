@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  hop_video_player:
+  flutter_extended_video_player:
     path: ../
 
   cupertino_icons: ^1.0.5

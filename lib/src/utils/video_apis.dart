@@ -7,7 +7,7 @@ import 'package:http/http.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../models/vimeo_models.dart';
 
-String hopVideoPlayerErrorString(String val) {
+String flutterExtendedVideoPlayerErrorString(String val) {
   return '*\n------error------\n\n$val\n\n------end------\n*';
 }
 
@@ -58,7 +58,7 @@ class VideoApis {
     } catch (error) {
       if (error.toString().contains('XMLHttpRequest')) {
         log(
-          hopVideoPlayerErrorString(
+          flutterExtendedVideoPlayerErrorString(
             '(INFO) To play vimeo video in WEB, Please enable CORS in your browser',
           ),
         );
@@ -97,7 +97,7 @@ class VideoApis {
     } catch (error) {
       if (error.toString().contains('XMLHttpRequest')) {
         log(
-          hopVideoPlayerErrorString(
+          flutterExtendedVideoPlayerErrorString(
             '(INFO) To play vimeo video in WEB, Please enable CORS in your browser',
           ),
         );
@@ -142,7 +142,7 @@ class VideoApis {
     } catch (error) {
       if (error.toString().contains('XMLHttpRequest')) {
         log(
-          hopVideoPlayerErrorString(
+          flutterExtendedVideoPlayerErrorString(
             '(INFO) To play youtube video in WEB, Please enable CORS in your browser',
           ),
         );

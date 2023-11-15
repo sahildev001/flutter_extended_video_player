@@ -1,11 +1,11 @@
 
-part of 'package:hop_video_player/src/hop_video_player.dart';
-class _HopCoreVideoPlayer extends StatelessWidget {
+part of 'package:flutter_extended_video_player/src/flutter_extended_video_player.dart';
+class _FlutterExtendedCoreVideoPlayer extends StatelessWidget {
   final VideoPlayerController videoPlayerCtr;
   final double videoAspectRatio;
   final String tag;
 
-  const _HopCoreVideoPlayer({
+  const _FlutterExtendedCoreVideoPlayer({
     required this.videoPlayerCtr,
     required this.videoAspectRatio,
     required this.tag,
@@ -13,15 +13,15 @@ class _HopCoreVideoPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: tag);
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: tag);
     return Builder(
       builder: (ctrx) {
         return RawKeyboardListener(
           autofocus: true,
           focusNode:
-              (hopCtr.isFullScreen ? FocusNode() : hopCtr.keyboardFocusWeb) ??
+              (flutterExtendedCtr.isFullScreen ? FocusNode() : flutterExtendedCtr.keyboardFocusWeb) ??
                   FocusNode(),
-          onKey: (value) => hopCtr.onKeyBoardEvents(
+          onKey: (value) => flutterExtendedCtr.onKeyBoardEvents(
             event: value,
             appContext: ctrx,
             tag: tag,
@@ -35,19 +35,19 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                   child: VideoPlayer(videoPlayerCtr),
                 ),
               ),
-              GetBuilder<HopVideoPlayerGetXVideoController>(
+              GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
                 tag: tag,
-                id: 'hopVideoPlayerVideoState',
-                builder: (_) => GetBuilder<HopVideoPlayerGetXVideoController>(
+                id: 'flutterExtendedVideoPlayerVideoState',
+                builder: (_) => GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
                   tag: tag,
                   id: 'video-progress',
-                  builder: (hopCtr) {
-                    if (hopCtr.videoThumbnail == null) {
+                  builder: (flutterExtendedCtr) {
+                    if (flutterExtendedCtr.videoThumbnail == null) {
                       return const SizedBox();
                     }
 
-                    if (hopCtr.hopVideoPlayerVideoState == HopVideoPlayerVideoState.paused &&
-                        hopCtr.videoPosition == Duration.zero) {
+                    if (flutterExtendedCtr.flutterExtendedVideoPlayerVideoState == FlutterExtendedVideoPlayerVideoState.paused &&
+                        flutterExtendedCtr.videoPosition == Duration.zero) {
                       return SizedBox.expand(
                         child: TweenAnimationBuilder<double>(
                           builder: (context, value, child) => Opacity(
@@ -58,7 +58,7 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                           duration: const Duration(milliseconds: 400),
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              image: hopCtr.videoThumbnail,
+                              image: flutterExtendedCtr.videoThumbnail,
                             ),
                           ),
                         ),
@@ -70,11 +70,11 @@ class _HopCoreVideoPlayer extends StatelessWidget {
               ),
               _VideoOverlays(tag: tag),
               IgnorePointer(
-                child: GetBuilder<HopVideoPlayerGetXVideoController>(
+                child: GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
                   tag: tag,
-                  id: 'hopVideoPlayerVideoState',
-                  builder: (hopCtr) {
-                    final loadingWidget = hopCtr.onLoading?.call(context) ??
+                  id: 'flutterExtendedVideoPlayerVideoState',
+                  builder: (flutterExtendedCtr) {
+                    final loadingWidget = flutterExtendedCtr.onLoading?.call(context) ??
                         const Center(
                           child: CircularProgressIndicator(
                             backgroundColor: Colors.transparent,
@@ -84,10 +84,10 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                         );
 
                     if (kIsWeb) {
-                      switch (hopCtr.hopVideoPlayerVideoState) {
-                        case HopVideoPlayerVideoState.loading:
+                      switch (flutterExtendedCtr.flutterExtendedVideoPlayerVideoState) {
+                        case FlutterExtendedVideoPlayerVideoState.loading:
                           return loadingWidget;
-                        case HopVideoPlayerVideoState.paused:
+                        case FlutterExtendedVideoPlayerVideoState.paused:
                           return const Center(
                             child: Icon(
                               Icons.play_arrow,
@@ -95,7 +95,7 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                               color: Colors.white,
                             ),
                           );
-                        case HopVideoPlayerVideoState.playing:
+                        case FlutterExtendedVideoPlayerVideoState.playing:
                           return Center(
                             child: TweenAnimationBuilder<double>(
                               builder: (context, value, child) => Opacity(
@@ -111,9 +111,9 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                               ),
                             ),
                           );
-                        case HopVideoPlayerVideoState.error:
+                        case FlutterExtendedVideoPlayerVideoState.error:
                           return const SizedBox();
-                        case HopVideoPlayerVideoState.finished:
+                        case FlutterExtendedVideoPlayerVideoState.finished:
                          return const Center(
                             child: Icon(
                               Icons.replay,
@@ -124,7 +124,7 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                           break;
                       }
                     } else {
-                      if (hopCtr.hopVideoPlayerVideoState == HopVideoPlayerVideoState.loading) {
+                      if (flutterExtendedCtr.flutterExtendedVideoPlayerVideoState == FlutterExtendedVideoPlayerVideoState.loading) {
                         return loadingWidget;
                       }
                       return const SizedBox();
@@ -133,27 +133,27 @@ class _HopCoreVideoPlayer extends StatelessWidget {
                 ),
               ),
               if (!kIsWeb)
-                GetBuilder<HopVideoPlayerGetXVideoController>(
+                GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
                   tag: tag,
                   id: 'full-screen',
-                  builder: (hopCtr) => hopCtr.isFullScreen
+                  builder: (flutterExtendedCtr) => flutterExtendedCtr.isFullScreen
                       ? const SizedBox()
-                      : GetBuilder<HopVideoPlayerGetXVideoController>(
+                      : GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
                           tag: tag,
                           id: 'overlay',
-                          builder: (hopCtr) {
-                            var check = hopCtr.isOverlayVisible ||
-                                !hopCtr.alwaysShowProgressBar;
+                          builder: (flutterExtendedCtr) {
+                            var check = flutterExtendedCtr.isOverlayVisible ||
+                                !flutterExtendedCtr.alwaysShowProgressBar;
                            // print("-----sahil --------- check ${check}");
                             return check
                               ? const SizedBox()
                               : Align(
                                   alignment: Alignment.bottomCenter,
-                                  child: HopProgressBar(
+                                  child: FlutterExtendedProgressBar(
                                     tag: tag,
                                     alignment: Alignment.bottomCenter,
-                                    hopProgressBarConfig:
-                                        hopCtr.hopProgressBarConfig,
+                                    flutterExtendedProgressBarConfig:
+                                    flutterExtendedCtr.flutterExtendedProgressBarConfig,
                                   ),
                                 );
       }

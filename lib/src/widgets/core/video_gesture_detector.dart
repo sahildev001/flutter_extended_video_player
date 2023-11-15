@@ -1,4 +1,4 @@
-part of 'package:hop_video_player/src/hop_video_player.dart';
+part of 'package:flutter_extended_video_player/src/flutter_extended_video_player.dart';
 
 class _VideoGestureDetector extends StatelessWidget {
   final Widget? child;
@@ -15,12 +15,12 @@ class _VideoGestureDetector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: tag);
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: tag);
     return MouseRegion(
-      onHover: (event) => hopCtr.onOverlayHover(),
-      onExit: (event) => hopCtr.onOverlayHoverExit(),
+      onHover: (event) => flutterExtendedCtr.onOverlayHover(),
+      onExit: (event) => flutterExtendedCtr.onOverlayHoverExit(),
       child: GestureDetector(
-        onTap: onTap ?? hopCtr.toggleVideoOverlay,
+        onTap: onTap ?? flutterExtendedCtr.toggleVideoOverlay,
         onDoubleTap: onDoubleTap,
         child: child,
       ),

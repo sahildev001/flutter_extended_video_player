@@ -29,8 +29,8 @@ typedef GetProgressBarHandlePaint = Paint Function({
   double? circleHandlerRadius,
 });
 
-class HopProgressBarConfig {
-  const HopProgressBarConfig({
+class FlutterExtendedProgressBarConfig {
+  const FlutterExtendedProgressBarConfig({
     this.playingBarColor = Colors.red,
     this.bufferedBarColor = const Color.fromRGBO(255, 255, 255, 0.38),
     this.circleHandlerColor = Colors.red,
@@ -87,7 +87,7 @@ class HopProgressBarConfig {
   /// Radius to curve the ends of the bar.
   final double curveRadius;
 
-  HopProgressBarConfig copyWith({
+  FlutterExtendedProgressBarConfig copyWith({
     Color? playingBarColor,
     Color? bufferedBarColor,
     Color? circleHandlerColor,
@@ -102,7 +102,7 @@ class HopProgressBarConfig {
     double? circleHandlerRadius,
     double? curveRadius,
   }) {
-    return HopProgressBarConfig(
+    return FlutterExtendedProgressBarConfig(
       playingBarColor: playingBarColor ?? this.playingBarColor,
       bufferedBarColor: bufferedBarColor ?? this.bufferedBarColor,
       circleHandlerColor: circleHandlerColor ?? this.circleHandlerColor,

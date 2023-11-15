@@ -1,4 +1,4 @@
-class HopPlayerConfig {
+class FlutterExtendedPlayerConfig {
   final bool autoPlay;
   final bool isLooping;
   final bool forcedVideoFocus;
@@ -11,7 +11,7 @@ class HopPlayerConfig {
   /// Default value is [1080, 720, 360]
   final List<int> videoQualityPriority;
 
-  const HopPlayerConfig({
+  const FlutterExtendedPlayerConfig({
     this.autoPlay = true,
     this.isLooping = false,
     this.forcedVideoFocus = false,
@@ -19,14 +19,14 @@ class HopPlayerConfig {
     this.videoQualityPriority = const [1080, 720, 360],
   });
 
-  HopPlayerConfig copyWith({
+  FlutterExtendedPlayerConfig copyWith({
     bool? autoPlay,
     bool? isLooping,
     bool? forcedVideoFocus,
     bool? wakelockEnabled,
     List<int>? videoQualityPriority,
   }) {
-    return HopPlayerConfig(
+    return FlutterExtendedPlayerConfig(
       autoPlay: autoPlay ?? this.autoPlay,
       isLooping: isLooping ?? this.isLooping,
       forcedVideoFocus: forcedVideoFocus ?? this.forcedVideoFocus,

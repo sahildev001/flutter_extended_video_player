@@ -1,4 +1,4 @@
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 import 'package:flutter/material.dart';
 
 class PlayVideoFromAsset extends StatefulWidget {
@@ -9,10 +9,10 @@ class PlayVideoFromAsset extends StatefulWidget {
 }
 
 class _PlayVideoFromAssetState extends State<PlayVideoFromAsset> {
-  late final HopVideoPlayerController controller;
+  late final FlutterExtendedVideoPlayerController controller;
   @override
   void initState() {
-    controller = HopVideoPlayerController(
+    controller = FlutterExtendedVideoPlayerController(
       playVideoFrom: PlayVideoFrom.asset('assets/SampleVideo_720x480_20mb.mp4'),
     )..initialise();
     super.initState();
@@ -31,9 +31,9 @@ class _PlayVideoFromAssetState extends State<PlayVideoFromAsset> {
         title: const Text('Play video from Asset (with custom labels)'),
       ),
       body: Center(
-        child: HopVideoPlayer(
+        child: FlutterExtendedVideoPlayer(
           controller: controller,
-          hopPlayerLabels: const HopVideoPlayerLabels(
+          flutterExtendedVideoPlayerLables: const FlutterExtendedVideoPlayerLables(
             play: "PLAY",
             pause: "PAUSE",
             error: "ERROR WHILE TRYING TO PLAY VIDEO",

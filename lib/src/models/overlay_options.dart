@@ -1,7 +1,7 @@
-import '../../hop_video_player.dart';
+import '../../flutter_extended_video_player.dart';
 
 class OverLayOptions {
-  final HopVideoPlayerVideoState hopVideoPlayerVideoState;
+  final FlutterExtendedVideoPlayerVideoState flutterExtendedVideoPlayerVideoState;
   final Duration videoDuration;
   final Duration videoPosition;
   final bool isFullScreen;
@@ -11,10 +11,10 @@ class OverLayOptions {
   final bool autoPlay;
   final String currentVideoPlaybackSpeed;
   final List<String> videoPlayBackSpeeds;
-  final HopVideoPlayerType videoPlayerType;
-  final HopProgressBar hopProgresssBar;
+  final FlutterExtendedVideoPlayerType videoPlayerType;
+  final FlutterExtendedProgressBar flutterExtendedProgresssBar;
   OverLayOptions({
-    required this.hopVideoPlayerVideoState,
+    required this.flutterExtendedVideoPlayerVideoState,
     required this.videoDuration,
     required this.videoPosition,
     required this.isFullScreen,
@@ -25,6 +25,6 @@ class OverLayOptions {
     required this.currentVideoPlaybackSpeed,
     required this.videoPlayBackSpeeds,
     required this.videoPlayerType,
-    required this.hopProgresssBar,
+    required this.flutterExtendedProgresssBar,
   });
 }

@@ -5,36 +5,36 @@ import 'package:get/get.dart';
 import 'package:universal_html/html.dart' as uni_html;
 import 'package:wakelock_plus/wakelock_plus.dart';
 
-import '../../hop_video_player.dart';
+import '../../flutter_extended_video_player.dart';
 import '../utils/logger.dart';
 import '../utils/video_apis.dart';
-import 'hop_getx_video_controller.dart';
+import 'flutter_extended_getx_video_controller.dart';
 
-class HopVideoPlayerController {
-  late HopVideoPlayerGetXVideoController _ctr;
+class FlutterExtendedVideoPlayerController {
+  late FlutterExtendedVideoPlayerGetXVideoController _ctr;
   late String getTag;
   bool _isCtrInitialised = false;
 
   Object? _initializationError;
 
   final PlayVideoFrom playVideoFrom;
-  final HopPlayerConfig hopPlayerConfig;
+  final FlutterExtendedPlayerConfig flutterExtendedPlayerConfig;
 
-  /// controller for hop player
-  HopVideoPlayerController({
+  /// controller for FlutterExtendedVideoPlayer player
+  FlutterExtendedVideoPlayerController({
     required this.playVideoFrom,
-    this.hopPlayerConfig = const HopPlayerConfig(),
+    this.flutterExtendedPlayerConfig = const FlutterExtendedPlayerConfig(),
   }) {
     _init();
   }
 
   void _init() {
     getTag = UniqueKey().toString();
-    Get.config(enableLog: HopVideoPlayer.enableGetxLogs);
-    _ctr = Get.put(HopVideoPlayerGetXVideoController(), permanent: true, tag: getTag)
+    Get.config(enableLog: FlutterExtendedVideoPlayer.enableGetxLogs);
+    _ctr = Get.put(FlutterExtendedVideoPlayerGetXVideoController(), permanent: true, tag: getTag)
       ..config(
         playVideoFrom: playVideoFrom,
-        playerConfig: hopPlayerConfig,
+        playerConfig: flutterExtendedPlayerConfig,
       );
   }
 
@@ -49,12 +49,12 @@ class HopVideoPlayerController {
       try {
         if (!_isCtrInitialised) {
           await _ctr.videoInit();
-          HopVideoPlayerLog('$getTag Hop player Initialized');
+          FlutterExtendedVideoPlayerLog('$getTag FlutterExtendedVideoPlayer player Initialized');
         } else {
-          HopVideoPlayerLog('$getTag Hop Player Controller Already Initialized');
+          FlutterExtendedVideoPlayerLog('$getTag FlutterExtendedVideoPlayer Player Controller Already Initialized');
         }
       } catch (error) {
-        HopVideoPlayerLog('$getTag Hop Player Controller failed to initialize');
+        FlutterExtendedVideoPlayerLog('$getTag FlutterExtendedVideoPlayer Player Controller failed to initialize');
         _initializationError = error;
       }
     });
@@ -123,11 +123,11 @@ class HopVideoPlayerController {
 
   bool get isMute => _ctr.isMute;
 
-  HopVideoPlayerVideoState get videoState => _ctr.hopVideoPlayerVideoState;
+  FlutterExtendedVideoPlayerVideoState get videoState => _ctr.flutterExtendedVideoPlayerVideoState;
 
   VideoPlayerValue? get videoPlayerValue => _ctr.videoCtr?.value;
 
-  HopVideoPlayerType get videoPlayerType => _ctr.videoPlayerType;
+  FlutterExtendedVideoPlayerType get videoPlayerType => _ctr.videoPlayerType;
 
   // Future<void> initialize() async => _ctr.videoCtr?.initialize;
 
@@ -142,10 +142,10 @@ class HopVideoPlayerController {
   //! video play/pause
 
   /// plays the video
-  void play() => _ctr.hopVideoStateChanger(HopVideoPlayerVideoState.playing);
+  void play() => _ctr.flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.playing);
 
   /// pauses the video
-  void pause() => _ctr.hopVideoStateChanger(HopVideoPlayerVideoState.paused);
+  void pause() => _ctr.flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.paused);
 
   /// toogle play and pause
   void togglePlayPause() {
@@ -181,29 +181,29 @@ class HopVideoPlayerController {
     _ctr.isMute ? await _ctr.unMute() : await _ctr.mute();
   }
 
-  ///Dispose Hop video player controller
+  ///Dispose FlutterExtendedVideoPlayer video player controller
   void dispose() {
     try {
       _isCtrInitialised = false;
       _ctr.videoCtr?.removeListener(_ctr.videoListner);
       _ctr.videoCtr?.dispose();
       _ctr.removeListenerId(
-          'hopVideoPlayerVideoState', _ctr.hopVideoStateListner);
-      if (hopPlayerConfig.wakelockEnabled) WakelockPlus.disable();
-      Get.delete<HopVideoPlayerGetXVideoController>(
+          'flutterExtendedVideoPlayerVideoState', _ctr.flutterExtendedVideoStateListner);
+      if (flutterExtendedPlayerConfig.wakelockEnabled) WakelockPlus.disable();
+      Get.delete<FlutterExtendedVideoPlayerGetXVideoController>(
         force: true,
         tag: getTag,
       );
-      HopVideoPlayerLog('$getTag Hop player Disposed');
+      FlutterExtendedVideoPlayerLog('$getTag FlutterExtendedVideoPlayer player Disposed');
     }catch(e){
-      HopVideoPlayerLog('error on dispose $e');
+      FlutterExtendedVideoPlayerLog('error on dispose $e');
     }
   }
 
   /// used to change the video
   Future<void> changeVideo({
     required PlayVideoFrom playVideoFrom,
-    HopPlayerConfig playerConfig = const HopPlayerConfig(),
+    FlutterExtendedPlayerConfig playerConfig = const FlutterExtendedPlayerConfig(),
   }) =>
       _ctr.changeVideo(
         playVideoFrom: playVideoFrom,

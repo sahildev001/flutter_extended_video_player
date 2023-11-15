@@ -1,6 +1,6 @@
-part of 'hop_getx_video_controller.dart';
+part of 'flutter_extended_getx_video_controller.dart';
 
-class _HopGesturesController extends _HopVideoQualityController {
+class _FlutterExtendedGesturesController extends _FlutterExtendedVideoQualityController {
   //double tap
   Timer? leftDoubleTapTimer;
   Timer? rightDoubleTapTimer;

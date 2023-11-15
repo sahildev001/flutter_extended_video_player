@@ -1,4 +1,4 @@
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 import 'package:flutter/material.dart';
 
 class PlayVideoFromVimeoId extends StatefulWidget {
@@ -9,13 +9,13 @@ class PlayVideoFromVimeoId extends StatefulWidget {
 }
 
 class _PlayVideoFromVimeoIdState extends State<PlayVideoFromVimeoId> {
-  late final HopVideoPlayerController controller;
+  late final FlutterExtendedVideoPlayerController controller;
   final videoTextFieldCtr = TextEditingController();
   final hashTextFieldCtr = TextEditingController();
 
   @override
   void initState() {
-    controller = HopVideoPlayerController(
+    controller = FlutterExtendedVideoPlayerController(
       playVideoFrom: PlayVideoFrom.vimeo('518228118'),
     )..initialise();
     super.initState();
@@ -36,7 +36,7 @@ class _PlayVideoFromVimeoIdState extends State<PlayVideoFromVimeoId> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              HopVideoPlayer(controller: controller),
+              FlutterExtendedVideoPlayer(controller: controller),
               const SizedBox(height: 40),
               _loadVideoFromUrl()
             ],

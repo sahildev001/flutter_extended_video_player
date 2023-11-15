@@ -4,13 +4,13 @@ import 'package:example/screens/from_network_urls.dart';
 import 'package:example/screens/from_vimeo_private_id.dart';
 import 'package:example/screens/from_youtube.dart';
 import 'package:flutter/material.dart';
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 
 import 'screens/cutom_video_controllers.dart';
 import 'screens/from_vimeo_id.dart';
 
 void main() {
-  HopVideoPlayer.enableLogs = true;
+  FlutterExtendedVideoPlayer.enableLogs = true;
   runApp(const MyApp());
 }
 

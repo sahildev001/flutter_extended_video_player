@@ -1,4 +1,4 @@
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +11,10 @@ class PlayVideoFromNetworkQualityUrls extends StatefulWidget {
 }
 
 class _PlayVideoFromAssetState extends State<PlayVideoFromNetworkQualityUrls> {
-  late final HopVideoPlayerController controller;
+  late final FlutterExtendedVideoPlayerController controller;
   @override
   void initState() {
-    controller = HopVideoPlayerController(
+    controller = FlutterExtendedVideoPlayerController(
       playVideoFrom: PlayVideoFrom.networkQualityUrls(
         videoUrls: [
           VideoQalityUrls(
@@ -45,9 +45,9 @@ class _PlayVideoFromAssetState extends State<PlayVideoFromNetworkQualityUrls> {
       appBar: AppBar(title: const Text('Play video from Quality urls')),
       body: SafeArea(
         child: Center(
-          child: HopVideoPlayer(
+          child: FlutterExtendedVideoPlayer(
             controller: controller,
-            hopProgressBarConfig: const HopProgressBarConfig(
+            flutterExtendedProgressBarConfig: const FlutterExtendedProgressBarConfig(
               padding: kIsWeb
                   ? EdgeInsets.zero
                   : EdgeInsets.only(

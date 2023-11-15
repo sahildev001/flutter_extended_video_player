@@ -1,4 +1,4 @@
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +10,12 @@ class PlayVideoFromNetwork extends StatefulWidget {
 }
 
 class _PlayVideoFromAssetState extends State<PlayVideoFromNetwork> {
-  late final HopVideoPlayerController controller;
+  late final FlutterExtendedVideoPlayerController controller;
   final videoTextFieldCtr = TextEditingController();
 
   @override
   void initState() {
-    controller = HopVideoPlayerController(
+    controller = FlutterExtendedVideoPlayerController(
       playVideoFrom: PlayVideoFrom.network(
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
       ),
@@ -38,9 +38,9 @@ class _PlayVideoFromAssetState extends State<PlayVideoFromNetwork> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              HopVideoPlayer(
+              FlutterExtendedVideoPlayer(
                 controller: controller,
-                hopProgressBarConfig: const HopProgressBarConfig(
+                flutterExtendedProgressBarConfig: const FlutterExtendedProgressBarConfig(
                   padding: kIsWeb
                       ? EdgeInsets.zero
                       : EdgeInsets.only(

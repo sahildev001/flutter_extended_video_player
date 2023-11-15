@@ -1,4 +1,4 @@
-enum HopVideoPlayerVideoState {
+enum FlutterExtendedVideoPlayerVideoState {
   loading,
   playing,
   paused,
@@ -6,7 +6,7 @@ enum HopVideoPlayerVideoState {
   finished
 }
 
-enum HopVideoPlayerType {
+enum FlutterExtendedVideoPlayerType {
   network,
   networkQualityUrls,
   file,

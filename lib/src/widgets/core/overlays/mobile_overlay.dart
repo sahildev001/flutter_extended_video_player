@@ -1,4 +1,4 @@
-part of 'package:hop_video_player/src/hop_video_player.dart';
+part of 'package:flutter_extended_video_player/src/flutter_extended_video_player.dart';
 
 class _MobileOverlay extends StatelessWidget {
   final String tag;
@@ -11,7 +11,7 @@ class _MobileOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     const overlayColor = Colors.black38;
     const itemColor = Colors.white;
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: tag);
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: tag);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -27,8 +27,8 @@ class _MobileOverlay extends StatelessWidget {
                     isForward: false,
                     height: double.maxFinite,
                     onDoubleTap: _isRtl()
-                        ? hopCtr.onRightDoubleTap
-                        : hopCtr.onLeftDoubleTap,
+                        ? flutterExtendedCtr.onRightDoubleTap
+                        : flutterExtendedCtr.onLeftDoubleTap,
                   ),
                 ),
                 SizedBox(
@@ -43,8 +43,8 @@ class _MobileOverlay extends StatelessWidget {
                     tag: tag,
                     height: double.maxFinite,
                     onDoubleTap: _isRtl()
-                        ? hopCtr.onLeftDoubleTap
-                        : hopCtr.onRightDoubleTap,
+                        ? flutterExtendedCtr.onLeftDoubleTap
+                        : flutterExtendedCtr.onRightDoubleTap,
                   ),
                 ),
               ],
@@ -58,17 +58,17 @@ class _MobileOverlay extends StatelessWidget {
             children: [
               Expanded(
                 child: IgnorePointer(
-                  child: hopCtr.videoTitle ?? const SizedBox(),
+                  child: flutterExtendedCtr.videoTitle ?? const SizedBox(),
                 ),
               ),
               MaterialIconButton(
-                toolTipMesg: hopCtr.hopVideoPlayerLabels.settings,
+                toolTipMesg: flutterExtendedCtr.flutterExtendedVideoPlayerLables.settings,
                 color: itemColor,
                 onPressed: () {
-                  if (hopCtr.isOverlayVisible) {
+                  if (flutterExtendedCtr.isOverlayVisible) {
                     _bottomSheet(context);
                   } else {
-                    hopCtr.toggleVideoOverlay();
+                    flutterExtendedCtr.toggleVideoOverlay();
                   }
                 },
                 child: const Icon(

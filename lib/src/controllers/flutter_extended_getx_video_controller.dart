@@ -8,25 +8,25 @@ import 'package:get/get.dart';
 import 'package:universal_html/html.dart' as uni_html;
 import 'package:wakelock_plus/wakelock_plus.dart';
 
-import '../../hop_video_player.dart';
+import '../../flutter_extended_video_player.dart';
 import '../utils/logger.dart';
 import '../utils/video_apis.dart';
 
-part 'hop_video_base_controller.dart';
-part 'hop_video_gestures_controller.dart';
-part 'hop_ui_controller.dart';
-part 'hop_video_controller.dart';
-part 'hop_video_video_quality_controller.dart';
+part 'flutter_extended_video_base_controller.dart';
+part 'flutter_extended_video_gestures_controller.dart';
+part 'flutter_extended_ui_controller.dart';
+part 'flutter_extended_video_controller.dart';
+part 'flutter_extended_video_video_quality_controller.dart';
 
-class HopVideoPlayerGetXVideoController extends _HopGesturesController {
+class FlutterExtendedVideoPlayerGetXVideoController extends _FlutterExtendedGesturesController {
   ///main videoplayer controller
   VideoPlayerController? get videoCtr => _videoCtr;
 
-  ///hopVideoPlayer state notifier
-  HopVideoPlayerVideoState get hopVideoPlayerVideoState => _hopVideoPlayerVideoState;
+  ///FlutterExtendedVideoPlayer state notifier
+  FlutterExtendedVideoPlayerVideoState get flutterExtendedVideoPlayerVideoState => _flutterExtendedVideoPlayerVideoState;
 
   ///vimeo or general --video player type
-  HopVideoPlayerType get videoPlayerType => _videoPlayerType;
+  FlutterExtendedVideoPlayerType get videoPlayerType => _videoPlayerType;
 
   String get currentPaybackSpeed => _currentPaybackSpeed;
 
@@ -37,15 +37,15 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
   Duration get videoPosition => _videoPosition;
 
   bool controllerInitialized = false;
-  late HopPlayerConfig hopPlayerConfig;
+  late FlutterExtendedPlayerConfig flutterExtendedPlayerConfig;
   late PlayVideoFrom playVideoFrom;
   void config({
     required PlayVideoFrom playVideoFrom,
-    required HopPlayerConfig playerConfig,
+    required FlutterExtendedPlayerConfig playerConfig,
   }) {
     this.playVideoFrom = playVideoFrom;
     _videoPlayerType = playVideoFrom.playerType;
-    hopPlayerConfig = playerConfig;
+    flutterExtendedPlayerConfig = playerConfig;
     autoPlay = playerConfig.autoPlay;
     isLooping = playerConfig.isLooping;
   }
@@ -54,14 +54,14 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
   Future<void> videoInit() async {
     ///
     // checkPlayerType();
-    HopVideoPlayerLog(_videoPlayerType.toString());
+    FlutterExtendedVideoPlayerLog(_videoPlayerType.toString());
     try {
       await _initializePlayer();
       await _videoCtr?.initialize();
       _videoDuration = _videoCtr?.value.duration ?? Duration.zero;
       await setLooping(isLooping);
       _videoCtr?.addListener(videoListner);
-      addListenerId('hopVideoPlayerVideoState', hopVideoStateListner);
+      addListenerId('flutterExtendedVideoPlayerVideoState', flutterExtendedVideoStateListner);
 
       checkAutoPlayVideo();
       controllerInitialized = true;
@@ -72,17 +72,17 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
       Future<void>.delayed(const Duration(milliseconds: 600))
           .then((_) => _isWebAutoPlayDone = true);
     } catch (e) {
-      hopVideoStateChanger(HopVideoPlayerVideoState.error);
+      flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.error);
       update(['errorState']);
       update(['update-all']);
-      HopVideoPlayerLog('ERROR ON hop_video_player:  $e');
+      FlutterExtendedVideoPlayerLog('ERROR ON FlutterExtended_video_player:  $e');
       rethrow;
     }
   }
 
   Future<void> _initializePlayer() async {
     switch (_videoPlayerType) {
-      case HopVideoPlayerType.network:
+      case FlutterExtendedVideoPlayerType.network:
 
         ///
         _videoCtr = VideoPlayerController.networkUrl(
@@ -94,9 +94,9 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
         );
         playingVideoUrl = playVideoFrom.dataSource;
         break;
-      case HopVideoPlayerType.networkQualityUrls:
+      case FlutterExtendedVideoPlayerType.networkQualityUrls:
         final url = await getUrlFromVideoQualityUrls(
-          qualityList: hopPlayerConfig.videoQualityPriority,
+          qualityList: flutterExtendedPlayerConfig.videoQualityPriority,
           videoUrls: playVideoFrom.videoQualityUrls!,
         );
 
@@ -111,13 +111,13 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
         playingVideoUrl = url;
 
         break;
-      case HopVideoPlayerType.youtube:
+      case FlutterExtendedVideoPlayerType.youtube:
         final urls = await getVideoQualityUrlsFromYoutube(
           playVideoFrom.dataSource!,
           playVideoFrom.live,
         );
         final url = await getUrlFromVideoQualityUrls(
-          qualityList: hopPlayerConfig.videoQualityPriority,
+          qualityList: flutterExtendedPlayerConfig.videoQualityPriority,
           videoUrls: urls,
         );
 
@@ -132,13 +132,13 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
         playingVideoUrl = url;
 
         break;
-      case HopVideoPlayerType.vimeo:
+      case FlutterExtendedVideoPlayerType.vimeo:
         await getQualityUrlsFromVimeoId(
           playVideoFrom.dataSource!,
           hash: playVideoFrom.hash,
         );
         final url = await getUrlFromVideoQualityUrls(
-          qualityList: hopPlayerConfig.videoQualityPriority,
+          qualityList: flutterExtendedPlayerConfig.videoQualityPriority,
           videoUrls: vimeoOrVideoUrls,
         );
 
@@ -152,7 +152,7 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
         playingVideoUrl = url;
 
         break;
-      case HopVideoPlayerType.asset:
+      case FlutterExtendedVideoPlayerType.asset:
 
         ///
         _videoCtr = VideoPlayerController.asset(
@@ -164,7 +164,7 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
         playingVideoUrl = playVideoFrom.dataSource;
 
         break;
-      case HopVideoPlayerType.file:
+      case FlutterExtendedVideoPlayerType.file:
         if (kIsWeb) {
           throw Exception('file doesnt support web');
         }
@@ -177,13 +177,13 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
         );
 
         break;
-      case HopVideoPlayerType.vimeoPrivateVideos:
+      case FlutterExtendedVideoPlayerType.vimeoPrivateVideos:
         await getQualityUrlsFromVimeoPrivateId(
           playVideoFrom.dataSource!,
           playVideoFrom.httpHeaders,
         );
         final url = await getUrlFromVideoQualityUrls(
-          qualityList: hopPlayerConfig.videoQualityPriority,
+          qualityList: flutterExtendedPlayerConfig.videoQualityPriority,
           videoUrls: vimeoOrVideoUrls,
         );
 
@@ -252,26 +252,26 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
     }
   }
 
-  ///this func will listen to update id `_hopVideoState`
-  void hopVideoStateListner() {
-    HopVideoPlayerLog(_hopVideoPlayerVideoState.toString());
-    switch (_hopVideoPlayerVideoState) {
-      case HopVideoPlayerVideoState.playing:
-        if (hopPlayerConfig.wakelockEnabled) WakelockPlus.enable();
+  ///this func will listen to update id `_flutterExtendedVideoState`
+  void flutterExtendedVideoStateListner() {
+    FlutterExtendedVideoPlayerLog(_flutterExtendedVideoPlayerVideoState.toString());
+    switch (_flutterExtendedVideoPlayerVideoState) {
+      case FlutterExtendedVideoPlayerVideoState.playing:
+        if (flutterExtendedPlayerConfig.wakelockEnabled) WakelockPlus.enable();
         playVideo(true);
         break;
-      case HopVideoPlayerVideoState.paused:
-        if (hopPlayerConfig.wakelockEnabled) WakelockPlus.disable();
+      case FlutterExtendedVideoPlayerVideoState.paused:
+        if (flutterExtendedPlayerConfig.wakelockEnabled) WakelockPlus.disable();
         playVideo(false);
         break;
-      case HopVideoPlayerVideoState.loading:
+      case FlutterExtendedVideoPlayerVideoState.loading:
         isShowOverlay(true);
         break;
-      case HopVideoPlayerVideoState.error:
-        if (hopPlayerConfig.wakelockEnabled) WakelockPlus.disable();
+      case FlutterExtendedVideoPlayerVideoState.error:
+        if (flutterExtendedPlayerConfig.wakelockEnabled) WakelockPlus.disable();
         playVideo(false);
         break;
-      case HopVideoPlayerVideoState.finished:
+      case FlutterExtendedVideoPlayerVideoState.finished:
         // TODO: Handle this case.
         break;
     }
@@ -282,22 +282,22 @@ class HopVideoPlayerGetXVideoController extends _HopGesturesController {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (autoPlay && (isVideoUiBinded ?? false)) {
         if (kIsWeb) await _videoCtr?.setVolume(0);
-        hopVideoStateChanger(HopVideoPlayerVideoState.playing);
+        flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.playing);
       } else {
-        hopVideoStateChanger(HopVideoPlayerVideoState.paused);
+        flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.paused);
       }
     });
   }
 
   Future<void> changeVideo({
     required PlayVideoFrom playVideoFrom,
-    required HopPlayerConfig playerConfig,
+    required FlutterExtendedPlayerConfig playerConfig,
   }) async {
     _videoCtr?.removeListener(videoListner);
-    hopVideoStateChanger(HopVideoPlayerVideoState.paused);
-    hopVideoStateChanger(HopVideoPlayerVideoState.loading);
+    flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.paused);
+    flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.loading);
     keyboardFocusWeb?.removeListener(keyboadListner);
-    removeListenerId('hopVideoPlayerVideoState', hopVideoStateListner);
+    removeListenerId('flutterExtendedVideoPlayerVideoState', flutterExtendedVideoStateListner);
     _isWebAutoPlayDone = false;
     vimeoOrVideoUrls = [];
     config(playVideoFrom: playVideoFrom, playerConfig: playerConfig);

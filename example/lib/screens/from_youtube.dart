@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 
 class PlayVideoFromYoutube extends StatefulWidget {
   const PlayVideoFromYoutube({Key? key}) : super(key: key);
@@ -9,13 +9,13 @@ class PlayVideoFromYoutube extends StatefulWidget {
 }
 
 class _PlayVideoFromVimeoIdState extends State<PlayVideoFromYoutube> {
-  late final HopVideoPlayerController controller;
+  late final FlutterExtendedVideoPlayerController controller;
   final videoTextFieldCtr = TextEditingController();
   @override
   void initState() {
-    controller = HopVideoPlayerController(
+    controller = FlutterExtendedVideoPlayerController(
       playVideoFrom: PlayVideoFrom.youtube('https://youtu.be/9_1-n0PYWHo?si=oNxQoSYd0WFaASKQ'),
-      hopPlayerConfig: const HopPlayerConfig(
+      flutterExtendedPlayerConfig: const FlutterExtendedPlayerConfig(
         videoQualityPriority: [720, 360],
         autoPlay: false,
       ),
@@ -38,7 +38,7 @@ class _PlayVideoFromVimeoIdState extends State<PlayVideoFromYoutube> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              HopVideoPlayer(
+              FlutterExtendedVideoPlayer(
                 controller: controller,
                 videoThumbnail: const DecorationImage(
                   image: NetworkImage(

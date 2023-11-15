@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import '../../hop_video_player.dart';
+import '../../flutter_extended_video_player.dart';
 
 class PlayVideoFrom {
   final String? dataSource;
   final String? hash;
-  final HopVideoPlayerType playerType;
+  final FlutterExtendedVideoPlayerType playerType;
   final VideoFormat? formatHint;
   final String? package;
   final File? file;
@@ -37,7 +37,7 @@ class PlayVideoFrom {
     Map<String, String> httpHeaders = const {},
   }) {
     return PlayVideoFrom._(
-      playerType: HopVideoPlayerType.network,
+      playerType: FlutterExtendedVideoPlayerType.network,
       dataSource: dataSource,
       formatHint: formatHint,
       closedCaptionFile: closedCaptionFile,
@@ -53,7 +53,7 @@ class PlayVideoFrom {
     VideoPlayerOptions? videoPlayerOptions,
   }) {
     return PlayVideoFrom._(
-      playerType: HopVideoPlayerType.asset,
+      playerType: FlutterExtendedVideoPlayerType.asset,
       dataSource: dataSource,
       package: package,
       closedCaptionFile: closedCaptionFile,
@@ -70,7 +70,7 @@ class PlayVideoFrom {
   }) {
     return PlayVideoFrom._(
       file: file,
-      playerType: HopVideoPlayerType.file,
+      playerType: FlutterExtendedVideoPlayerType.file,
       closedCaptionFile: closedCaptionFile,
       videoPlayerOptions: videoPlayerOptions,
     );
@@ -85,7 +85,7 @@ class PlayVideoFrom {
     Map<String, String> httpHeaders = const {},
   }) {
     return PlayVideoFrom._(
-      playerType: HopVideoPlayerType.vimeo,
+      playerType: FlutterExtendedVideoPlayerType.vimeo,
       dataSource: dataSource,
       hash: hash,
       formatHint: formatHint,
@@ -103,7 +103,7 @@ class PlayVideoFrom {
     Map<String, String> httpHeaders = const {},
   }) {
     return PlayVideoFrom._(
-      playerType: HopVideoPlayerType.vimeoPrivateVideos,
+      playerType: FlutterExtendedVideoPlayerType.vimeoPrivateVideos,
       dataSource: dataSource,
       formatHint: formatHint,
       closedCaptionFile: closedCaptionFile,
@@ -121,7 +121,7 @@ class PlayVideoFrom {
   }) {
     return PlayVideoFrom._(
       live: live,
-      playerType: HopVideoPlayerType.youtube,
+      playerType: FlutterExtendedVideoPlayerType.youtube,
       dataSource: dataSource,
       formatHint: formatHint,
       closedCaptionFile: closedCaptionFile,
@@ -137,7 +137,7 @@ class PlayVideoFrom {
     Map<String, String> httpHeaders = const {},
   }) {
     return PlayVideoFrom._(
-      playerType: HopVideoPlayerType.networkQualityUrls,
+      playerType: FlutterExtendedVideoPlayerType.networkQualityUrls,
       videoQualityUrls: videoUrls,
       formatHint: formatHint,
       closedCaptionFile: closedCaptionFile,

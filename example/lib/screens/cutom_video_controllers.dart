@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class CustomVideoControlls extends StatefulWidget {
 }
 
 class _CustomVideoControllsState extends State<CustomVideoControlls> {
-  late HopVideoPlayerController controller;
+  late FlutterExtendedVideoPlayerController controller;
   bool? isVideoPlaying;
   final videoTextFieldCtr = TextEditingController(
     text:
@@ -29,7 +29,7 @@ class _CustomVideoControllsState extends State<CustomVideoControlls> {
   @override
   void initState() {
     super.initState();
-    controller = HopVideoPlayerController(
+    controller = FlutterExtendedVideoPlayerController(
       playVideoFrom: PlayVideoFrom.asset('assets/SampleVideo_720x480_20mb.mp4'),
     )..initialise().then((value) {
         setState(() {
@@ -95,7 +95,7 @@ class _CustomVideoControllsState extends State<CustomVideoControlls> {
    var videoTitle = Padding(
       padding:  EdgeInsets.only(left: 15),
       child: Text(
-        "Hop Video title",
+        "FlutterExtendedVideoPlayer Video title",
         style: TextStyle(
           color: Colors.white,
           fontSize: 18,
@@ -115,7 +115,7 @@ class _CustomVideoControllsState extends State<CustomVideoControlls> {
           child: Column(
             children: [
               sizeH20,
-              HopVideoPlayer(
+              FlutterExtendedVideoPlayer(
                 alwaysShowProgressBar: alwaysShowProgressBar,
                 controller: controller,
                 matchFrameAspectRatioToVideo: true,

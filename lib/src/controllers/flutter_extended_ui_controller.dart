@@ -1,8 +1,8 @@
-part of 'hop_getx_video_controller.dart';
+part of 'flutter_extended_getx_video_controller.dart';
 
-class _HopUiController extends _HopVideoBaseController {
+class _FlutterExtendedUiController extends _FlutterExtendedVideoBaseController {
   bool alwaysShowProgressBar = true;
-  HopProgressBarConfig hopProgressBarConfig = const HopProgressBarConfig();
+  FlutterExtendedProgressBarConfig flutterExtendedProgressBarConfig = const FlutterExtendedProgressBarConfig();
   Widget Function(OverLayOptions options)? overlayBuilder;
   Widget? videoTitle;
   DecorationImage? videoThumbnail;
@@ -17,5 +17,5 @@ class _HopUiController extends _HopVideoBaseController {
   WidgetBuilder? onLoading;
 
   ///video player labels
-  HopVideoPlayerLabels hopVideoPlayerLabels = const HopVideoPlayerLabels();
+  FlutterExtendedVideoPlayerLables flutterExtendedVideoPlayerLables = const FlutterExtendedVideoPlayerLables();
 }

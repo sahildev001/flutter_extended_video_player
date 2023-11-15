@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 
 void main(List<String> args) {
   runApp(const YoutubeApp());
@@ -28,7 +28,7 @@ class YoutubeVideoViewer extends StatefulWidget {
 }
 
 class _YoutubeVideoViewerState extends State<YoutubeVideoViewer> {
-  late final HopVideoPlayerController controller;
+  late final FlutterExtendedVideoPlayerController controller;
   bool isLoading = true;
   @override
   void initState() {
@@ -37,13 +37,13 @@ class _YoutubeVideoViewerState extends State<YoutubeVideoViewer> {
   }
 
   void loadVideo() async {
-    final urls = await HopVideoPlayerController.getYoutubeUrls(
+    final urls = await FlutterExtendedVideoPlayerController.getYoutubeUrls(
       'https://youtu.be/A3ltMaM6noM',
     );
     setState(() => isLoading = false);
-    controller = HopVideoPlayerController(
+    controller = FlutterExtendedVideoPlayerController(
       playVideoFrom: PlayVideoFrom.networkQualityUrls(videoUrls: urls!),
-      hopPlayerConfig: const HopPlayerConfig(
+      flutterExtendedPlayerConfig: const FlutterExtendedPlayerConfig(
         videoQualityPriority: [360],
       ),
     )..initialise();
@@ -53,6 +53,6 @@ class _YoutubeVideoViewerState extends State<YoutubeVideoViewer> {
   Widget build(BuildContext context) {
     return isLoading
         ? const Center(child: CircularProgressIndicator())
-        : Center(child: HopVideoPlayer(controller: controller));
+        : Center(child: FlutterExtendedVideoPlayer(controller: controller));
   }
 }

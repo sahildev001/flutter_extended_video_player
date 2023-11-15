@@ -1,4 +1,4 @@
-class HopVideoPlayerLabels {
+class FlutterExtendedVideoPlayerLables {
   final String? play;
   final String? pause;
   final String? mute;
@@ -14,7 +14,7 @@ class HopVideoPlayerLabels {
   final String error;
 
   /// Labels displayed in the video player progress bar and when an error occurs
-  const HopVideoPlayerLabels({
+  const FlutterExtendedVideoPlayerLables({
     this.play,
     this.pause,
     this.mute,

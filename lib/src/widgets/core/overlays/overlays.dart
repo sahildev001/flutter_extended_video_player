@@ -1,4 +1,4 @@
-part of 'package:hop_video_player/src/hop_video_player.dart';
+part of 'package:flutter_extended_video_player/src/flutter_extended_video_player.dart';
 
 class _VideoOverlays extends StatelessWidget {
   final String tag;
@@ -9,49 +9,49 @@ class _VideoOverlays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: tag);
-    if (hopCtr.overlayBuilder != null) {
-      return GetBuilder<HopVideoPlayerGetXVideoController>(
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: tag);
+    if (flutterExtendedCtr.overlayBuilder != null) {
+      return GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
         id: 'update-all',
         tag: tag,
-        builder: (hopCtr) {
+        builder: (flutterExtendedCtr) {
           ///Custom overlay
-          final progressBar = HopProgressBar(
+          final progressBar = FlutterExtendedProgressBar(
             tag: tag,
-            hopProgressBarConfig: hopCtr.hopProgressBarConfig,
+            flutterExtendedProgressBarConfig: flutterExtendedCtr.flutterExtendedProgressBarConfig,
             onDragStart: (Duration duration){
               print("sahil 3::------------------------${duration.inSeconds}-----");
             },
           );
           final overlayOptions = OverLayOptions(
-            hopVideoPlayerVideoState: hopCtr.hopVideoPlayerVideoState,
-            videoDuration: hopCtr.videoDuration,
-            videoPosition: hopCtr.videoPosition,
-            isFullScreen: hopCtr.isFullScreen,
-            isLooping: hopCtr.isLooping,
-            isOverlayVisible: hopCtr.isOverlayVisible,
-            isMute: hopCtr.isMute,
-            autoPlay: hopCtr.autoPlay,
-            currentVideoPlaybackSpeed: hopCtr.currentPaybackSpeed,
-            videoPlayBackSpeeds: hopCtr.videoPlaybackSpeeds,
-            videoPlayerType: hopCtr.videoPlayerType,
-            hopProgresssBar: progressBar,
+            flutterExtendedVideoPlayerVideoState: flutterExtendedCtr.flutterExtendedVideoPlayerVideoState,
+            videoDuration: flutterExtendedCtr.videoDuration,
+            videoPosition: flutterExtendedCtr.videoPosition,
+            isFullScreen: flutterExtendedCtr.isFullScreen,
+            isLooping: flutterExtendedCtr.isLooping,
+            isOverlayVisible: flutterExtendedCtr.isOverlayVisible,
+            isMute: flutterExtendedCtr.isMute,
+            autoPlay: flutterExtendedCtr.autoPlay,
+            currentVideoPlaybackSpeed: flutterExtendedCtr.currentPaybackSpeed,
+            videoPlayBackSpeeds: flutterExtendedCtr.videoPlaybackSpeeds,
+            videoPlayerType: flutterExtendedCtr.videoPlayerType,
+            flutterExtendedProgresssBar: progressBar,
           );
 
           /// Returns the custom overlay, otherwise returns the default
           /// overlay with gesture detector
-          return hopCtr.overlayBuilder!(overlayOptions);
+          return flutterExtendedCtr.overlayBuilder!(overlayOptions);
         },
       );
     } else {
       ///Built in overlay
-      return GetBuilder<HopVideoPlayerGetXVideoController>(
+      return GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
         tag: tag,
         id: 'overlay',
-        builder: (hopCtr) {
+        builder: (flutterExtendedCtr) {
           return AnimatedOpacity(
             duration: const Duration(milliseconds: 200),
-            opacity: hopCtr.isOverlayVisible ? 1 : 0,
+            opacity: flutterExtendedCtr.isOverlayVisible ? 1 : 0,
             child: Stack(
               fit: StackFit.passthrough,
               children: [

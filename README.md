@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           title: Text('Flutter Extended VIDEO Player Example'),
         ),
         body: Center(
-          child:  Flutter ExtendedVideoPlayer(
+          child:  FlutterExtendedVideoPlayer(
             alwaysShowProgressBar: alwaysShowProgressBar,
             controller: controller,
             matchFrameAspectRatioToVideo: true,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 
 void main(List<String> args) {
-  HopVideoPlayer.enableLogs = true;
+  FlutterExtendedVideoPlayer.enableLogs = true;
   runApp(const ListOfVideosApp());
 }
 
@@ -16,30 +16,30 @@ class ListOfVideosApp extends StatelessWidget {
     return MaterialApp(
       home: ListOfVideosScreen(
         controllers: [
-          HopVideoPlayerController(
+          FlutterExtendedVideoPlayerController(
             playVideoFrom: PlayVideoFrom.youtube(
                 'https://www.youtube.com/watch?v=bk6Xst6euQk'),
-            hopPlayerConfig: const HopPlayerConfig(autoPlay: false),
+            flutterExtendedPlayerConfig: const FlutterExtendedPlayerConfig(autoPlay: false),
           ),
-          HopVideoPlayerController(
+          FlutterExtendedVideoPlayerController(
             playVideoFrom:
                 PlayVideoFrom.youtube('https://youtu.be/A3ltMaM6noM'),
-            hopPlayerConfig: const HopPlayerConfig(autoPlay: false),
+            flutterExtendedPlayerConfig: const FlutterExtendedPlayerConfig(autoPlay: false),
           ),
-          HopVideoPlayerController(
+          FlutterExtendedVideoPlayerController(
             playVideoFrom: PlayVideoFrom.youtube(
                 'https://www.youtube.com/watch?v=TjBA6jy4ako'),
-            hopPlayerConfig: const HopPlayerConfig(autoPlay: false),
+            flutterExtendedPlayerConfig: const FlutterExtendedPlayerConfig(autoPlay: false),
           ),
-          HopVideoPlayerController(
+          FlutterExtendedVideoPlayerController(
             playVideoFrom: PlayVideoFrom.youtube(
                 'https://www.youtube.com/watch?v=HqFgRHTuDyc'),
-            hopPlayerConfig: const HopPlayerConfig(autoPlay: false),
+            flutterExtendedPlayerConfig: const FlutterExtendedPlayerConfig(autoPlay: false),
           ),
-          HopVideoPlayerController(
+          FlutterExtendedVideoPlayerController(
             playVideoFrom: PlayVideoFrom.youtube(
                 'https://www.youtube.com/watch?v=GpxD-T060RY'),
-            hopPlayerConfig: const HopPlayerConfig(autoPlay: false),
+            flutterExtendedPlayerConfig: const FlutterExtendedPlayerConfig(autoPlay: false),
           ),
         ],
       ),
@@ -48,7 +48,7 @@ class ListOfVideosApp extends StatelessWidget {
 }
 
 class ListOfVideosScreen extends StatelessWidget {
-  final List<HopVideoPlayerController> controllers;
+  final List<FlutterExtendedVideoPlayerController> controllers;
 
   const ListOfVideosScreen({Key? key, required this.controllers})
       : super(key: key);
@@ -72,8 +72,8 @@ class ListOfVideosScreen extends StatelessWidget {
 }
 
 class VideoViewer extends StatefulWidget {
-  final HopVideoPlayerController controller;
-  final List<HopVideoPlayerController> controllers;
+  final FlutterExtendedVideoPlayerController controller;
+  final List<FlutterExtendedVideoPlayerController> controllers;
 
   const VideoViewer({
     Key? key,
@@ -109,7 +109,7 @@ class VideoViewerState extends State<VideoViewer> {
             widget.controller.pause();
           }
         },
-        child: HopVideoPlayer(
+        child: FlutterExtendedVideoPlayer(
             controller: widget.controller,
             alwaysShowProgressBar: true,
             overlayBuilder: (options) {
@@ -128,7 +128,7 @@ class VideoViewerState extends State<VideoViewer> {
                     const SizedBox(width: 10),
                     ElevatedButton(
                       child: Text(
-                        options.hopVideoPlayerVideoState == HopVideoPlayerVideoState.paused
+                        options.flutterExtendedVideoPlayerVideoState == FlutterExtendedVideoPlayerVideoState.paused
                             ? 'Play'
                             : 'Pause',
                       ),

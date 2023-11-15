@@ -1,4 +1,4 @@
-part of 'package:hop_video_player/src/hop_video_player.dart';
+part of 'package:flutter_extended_video_player/src/flutter_extended_video_player.dart';
 
 class _WebOverlay extends StatelessWidget {
   final String tag;
@@ -9,14 +9,14 @@ class _WebOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const overlayColor = Colors.black38;
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: tag);
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: tag);
     return Stack(
       children: [
         Positioned.fill(
           child: _VideoGestureDetector(
             tag: tag,
-            onTap: hopCtr.togglePlayPauseVideo,
-            onDoubleTap: () => hopCtr.toggleFullScreenOnWeb(context, tag),
+            onTap: flutterExtendedCtr.togglePlayPauseVideo,
+            onDoubleTap: () => flutterExtendedCtr.toggleFullScreenOnWeb(context, tag),
             child: const ColoredBox(
               color: overlayColor,
               child: SizedBox.expand(),
@@ -30,10 +30,10 @@ class _WebOverlay extends StatelessWidget {
           ),
         ),
         Positioned.fill(
-          child: GetBuilder<HopVideoPlayerGetXVideoController>(
+          child: GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
             tag: tag,
             id: 'double-tap',
-            builder: (hopCtr) {
+            builder: (flutterExtendedCtr) {
               return Row(
                 children: [
                   Expanded(
@@ -61,7 +61,7 @@ class _WebOverlay extends StatelessWidget {
             },
           ),
         ),
-        IgnorePointer(child: hopCtr.videoTitle ?? const SizedBox()),
+        IgnorePointer(child: flutterExtendedCtr.videoTitle ?? const SizedBox()),
       ],
     );
   }
@@ -76,24 +76,21 @@ class _WebOverlayBottomControlles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: tag);
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: tag);
     const durationTextStyle = TextStyle(color: Colors.white70);
     const itemColor = Colors.white;
 
     return MouseRegion(
-      onHover: (event) => hopCtr.onOverlayHover(),
-      onExit: (event) => hopCtr.onOverlayHoverExit(),
+      onHover: (event) => flutterExtendedCtr.onOverlayHover(),
+      onExit: (event) => flutterExtendedCtr.onOverlayHoverExit(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            HopProgressBar(
+            FlutterExtendedProgressBar(
               tag: tag,
-              hopProgressBarConfig: hopCtr.hopProgressBarConfig,
-              onDragStart: (Duration duration){
-                print("sahil 4::------------------------${duration.inSeconds}-----");
-              },
+              flutterExtendedProgressBarConfig: flutterExtendedCtr.flutterExtendedProgressBarConfig,
             ),
             Row(
               children: [
@@ -105,33 +102,33 @@ class _WebOverlayBottomControlles extends StatelessWidget {
                     child: Row(
                       children: [
                         _AnimatedPlayPauseIcon(tag: tag),
-                        GetBuilder<HopVideoPlayerGetXVideoController>(
+                        GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
                           tag: tag,
                           id: 'volume',
-                          builder: (hopCtr) => MaterialIconButton(
-                            toolTipMesg: hopCtr.isMute
-                                ? hopCtr.hopVideoPlayerLabels.unmute ??
+                          builder: (flutterExtendedCtr) => MaterialIconButton(
+                            toolTipMesg: flutterExtendedCtr.isMute
+                                ? flutterExtendedCtr.flutterExtendedVideoPlayerLables.unmute ??
                                     'Unmute${kIsWeb ? ' (m)' : ''}'
-                                : hopCtr.hopVideoPlayerLabels.mute ??
+                                : flutterExtendedCtr.flutterExtendedVideoPlayerLables.mute ??
                                     'Mute${kIsWeb ? ' (m)' : ''}',
                             color: itemColor,
-                            onPressed: hopCtr.toggleMute,
+                            onPressed: flutterExtendedCtr.toggleMute,
                             child: Icon(
-                              hopCtr.isMute
+                              flutterExtendedCtr.isMute
                                   ? Icons.volume_off_rounded
                                   : Icons.volume_up_rounded,
                             ),
                           ),
                         ),
-                        GetBuilder<HopVideoPlayerGetXVideoController>(
+                        GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
                           tag: tag,
                           id: 'video-progress',
-                          builder: (hopCtr) {
+                          builder: (flutterExtendedCtr) {
                             return Row(
                               children: [
                                 Text(
-                                  hopCtr.calculateVideoDuration(
-                                    hopCtr.videoPosition,
+                                  flutterExtendedCtr.calculateVideoDuration(
+                                    flutterExtendedCtr.videoPosition,
                                   ),
                                   style: durationTextStyle,
                                 ),
@@ -140,8 +137,8 @@ class _WebOverlayBottomControlles extends StatelessWidget {
                                   style: durationTextStyle,
                                 ),
                                 Text(
-                                  hopCtr.calculateVideoDuration(
-                                    hopCtr.videoDuration,
+                                  flutterExtendedCtr.calculateVideoDuration(
+                                    flutterExtendedCtr.videoDuration,
                                   ),
                                   style: durationTextStyle,
                                 ),
@@ -162,15 +159,15 @@ class _WebOverlayBottomControlles extends StatelessWidget {
                       children: [
                         _WebSettingsDropdown(tag: tag),
                         MaterialIconButton(
-                          toolTipMesg: hopCtr.isFullScreen
-                              ? hopCtr.hopVideoPlayerLabels.exitFullScreen ??
+                          toolTipMesg: flutterExtendedCtr.isFullScreen
+                              ? flutterExtendedCtr.flutterExtendedVideoPlayerLables.exitFullScreen ??
                                   'Exit full screen${kIsWeb ? ' (f)' : ''}'
-                              : hopCtr.hopVideoPlayerLabels.fullscreen ??
+                              : flutterExtendedCtr.flutterExtendedVideoPlayerLables.fullscreen ??
                                   'Fullscreen${kIsWeb ? ' (f)' : ''}',
                           color: itemColor,
-                          onPressed: () => _onFullScreenToggle(hopCtr, context),
+                          onPressed: () => _onFullScreenToggle(flutterExtendedCtr, context),
                           child: Icon(
-                            hopCtr.isFullScreen
+                            flutterExtendedCtr.isFullScreen
                                 ? Icons.fullscreen_exit
                                 : Icons.fullscreen,
                           ),
@@ -188,29 +185,29 @@ class _WebOverlayBottomControlles extends StatelessWidget {
   }
 
   void _onFullScreenToggle(
-    HopVideoPlayerGetXVideoController hopCtr,
+      FlutterExtendedVideoPlayerGetXVideoController flutterExtendedCtr,
     BuildContext context,
   ) {
-    if (hopCtr.isOverlayVisible) {
-      if (hopCtr.isFullScreen) {
+    if (flutterExtendedCtr.isOverlayVisible) {
+      if (flutterExtendedCtr.isFullScreen) {
         if (kIsWeb) {
           uni_html.document.exitFullscreen();
-          hopCtr.disableFullScreen(context, tag);
+          flutterExtendedCtr.disableFullScreen(context, tag);
           return;
         } else {
-          hopCtr.disableFullScreen(context, tag);
+          flutterExtendedCtr.disableFullScreen(context, tag);
         }
       } else {
         if (kIsWeb) {
           uni_html.document.documentElement?.requestFullscreen();
-          hopCtr.enableFullScreen(tag);
+          flutterExtendedCtr.enableFullScreen(tag);
           return;
         } else {
-          hopCtr.enableFullScreen(tag);
+          flutterExtendedCtr.enableFullScreen(tag);
         }
       }
     } else {
-      hopCtr.toggleVideoOverlay();
+      flutterExtendedCtr.toggleVideoOverlay();
     }
   }
 }

@@ -1,4 +1,4 @@
-part of 'package:hop_video_player/src/hop_video_player.dart';
+part of 'package:flutter_extended_video_player/src/flutter_extended_video_player.dart';
 
 class _MobileBottomSheet extends StatelessWidget {
   final String tag;
@@ -9,16 +9,16 @@ class _MobileBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HopVideoPlayerGetXVideoController>(
+    return GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
       tag: tag,
-      builder: (hopCtr) => Column(
+      builder: (flutterExtendedCtr) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (hopCtr.vimeoOrVideoUrls.isNotEmpty)
+          if (flutterExtendedCtr.vimeoOrVideoUrls.isNotEmpty)
             _bottomSheetTiles(
-              title: hopCtr.hopVideoPlayerLabels.quality,
+              title: flutterExtendedCtr.flutterExtendedVideoPlayerLables.quality,
               icon: Icons.video_settings_rounded,
-              subText: '${hopCtr.vimeoPlayingVideoQuality}p',
+              subText: '${flutterExtendedCtr.vimeoPlayingVideoQuality}p',
               onTap: () {
                 Navigator.of(context).pop();
                 Timer(const Duration(milliseconds: 100), () {
@@ -38,20 +38,20 @@ class _MobileBottomSheet extends StatelessWidget {
               },
             ),
           _bottomSheetTiles(
-            title: hopCtr.hopVideoPlayerLabels.loopVideo,
+            title: flutterExtendedCtr.flutterExtendedVideoPlayerLables.loopVideo,
             icon: Icons.loop_rounded,
-            subText: hopCtr.isLooping
-                ? hopCtr.hopVideoPlayerLabels.optionEnabled
-                : hopCtr.hopVideoPlayerLabels.optionDisabled,
+            subText: flutterExtendedCtr.isLooping
+                ? flutterExtendedCtr.flutterExtendedVideoPlayerLables.optionEnabled
+                : flutterExtendedCtr.flutterExtendedVideoPlayerLables.optionDisabled,
             onTap: () {
               Navigator.of(context).pop();
-              hopCtr.toggleLooping();
+              flutterExtendedCtr.toggleLooping();
             },
           ),
           _bottomSheetTiles(
-            title: hopCtr.hopVideoPlayerLabels.playbackSpeed,
+            title: flutterExtendedCtr.flutterExtendedVideoPlayerLables.playbackSpeed,
             icon: Icons.slow_motion_video_rounded,
-            subText: hopCtr.currentPaybackSpeed,
+            subText: flutterExtendedCtr.currentPaybackSpeed,
             onTap: () {
               Navigator.of(context).pop();
               Timer(const Duration(milliseconds: 100), () {
@@ -126,18 +126,18 @@ class _VideoQualitySelectorMob extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: tag);
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: tag);
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: hopCtr.vimeoOrVideoUrls
+        children: flutterExtendedCtr.vimeoOrVideoUrls
             .map(
               (e) => ListTile(
                 title: Text('${e.quality}p'),
                 onTap: () {
                   onTap != null ? onTap!() : Navigator.of(context).pop();
 
-                  hopCtr.changeVideoQuality(e.quality);
+                  flutterExtendedCtr.changeVideoQuality(e.quality);
                 },
               ),
             )
@@ -158,17 +158,17 @@ class _VideoPlaybackSelectorMob extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: tag);
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: tag);
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: hopCtr.videoPlaybackSpeeds
+        children: flutterExtendedCtr.videoPlaybackSpeeds
             .map(
               (e) => ListTile(
                 title: Text(e),
                 onTap: () {
                   onTap != null ? onTap!() : Navigator.of(context).pop();
-                  hopCtr.setVideoPlayBack(e);
+                  flutterExtendedCtr.setVideoPlayBack(e);
                 },
               ),
             )
@@ -190,23 +190,23 @@ class _MobileOverlayBottomControlles extends StatelessWidget {
     const durationTextStyle = TextStyle(color: Colors.white70);
     const itemColor = Colors.white;
 
-    return GetBuilder<HopVideoPlayerGetXVideoController>(
+    return GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
       tag: tag,
       id: 'full-screen',
-      builder: (hopCtr) => Column(
+      builder: (flutterExtendedCtr) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
               const SizedBox(width: 12),
-              GetBuilder<HopVideoPlayerGetXVideoController>(
+              GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
                 tag: tag,
                 id: 'video-progress',
-                builder: (hopCtr) {
+                builder: (flutterExtendedCtr) {
                   return Row(
                     children: [
                       Text(
-                        hopCtr.calculateVideoDuration(hopCtr.videoPosition),
+                        flutterExtendedCtr.calculateVideoDuration(flutterExtendedCtr.videoPosition),
                         style: const TextStyle(color: itemColor),
                       ),
                       const Text(
@@ -214,7 +214,7 @@ class _MobileOverlayBottomControlles extends StatelessWidget {
                         style: durationTextStyle,
                       ),
                       Text(
-                        hopCtr.calculateVideoDuration(hopCtr.videoDuration),
+                        flutterExtendedCtr.calculateVideoDuration(flutterExtendedCtr.videoDuration),
                         style: durationTextStyle,
                       ),
                     ],
@@ -223,58 +223,58 @@ class _MobileOverlayBottomControlles extends StatelessWidget {
               ),
               const Spacer(),
               MaterialIconButton(
-                toolTipMesg: hopCtr.isFullScreen
-                    ? hopCtr.hopVideoPlayerLabels.exitFullScreen ??
+                toolTipMesg: flutterExtendedCtr.isFullScreen
+                    ? flutterExtendedCtr.flutterExtendedVideoPlayerLables.exitFullScreen ??
                         'Exit full screen${kIsWeb ? ' (f)' : ''}'
-                    : hopCtr.hopVideoPlayerLabels.fullscreen ??
+                    : flutterExtendedCtr.flutterExtendedVideoPlayerLables.fullscreen ??
                         'Fullscreen${kIsWeb ? ' (f)' : ''}',
                 color: itemColor,
                 onPressed: () {
-                  if (hopCtr.isOverlayVisible) {
-                    if (hopCtr.isFullScreen) {
-                      hopCtr.disableFullScreen(context, tag);
+                  if (flutterExtendedCtr.isOverlayVisible) {
+                    if (flutterExtendedCtr.isFullScreen) {
+                      flutterExtendedCtr.disableFullScreen(context, tag);
                     } else {
-                      hopCtr.enableFullScreen(tag);
+                      flutterExtendedCtr.enableFullScreen(tag);
                     }
                   } else {
-                    hopCtr.toggleVideoOverlay();
+                    flutterExtendedCtr.toggleVideoOverlay();
                   }
                 },
                 child: Icon(
-                  hopCtr.isFullScreen
+                  flutterExtendedCtr.isFullScreen
                       ? Icons.fullscreen_exit
                       : Icons.fullscreen,
                 ),
               ),
             ],
           ),
-          GetBuilder<HopVideoPlayerGetXVideoController>(
+          GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
             tag: tag,
             id: 'overlay',
-            builder: (hopCtr) {
-              if (hopCtr.isFullScreen) {
+            builder: (flutterExtendedCtr) {
+              if (flutterExtendedCtr.isFullScreen) {
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(12, 0, 12, 20),
                   child: Visibility(
-                    visible: hopCtr.isOverlayVisible,
-                    child: HopProgressBar(
+                    visible: flutterExtendedCtr.isOverlayVisible,
+                    child: FlutterExtendedProgressBar(
                       tag: tag,
                       alignment: Alignment.topCenter,
-                      hopProgressBarConfig: hopCtr.hopProgressBarConfig,
-                      onDragStart: hopCtr.onDragStart,
-                      onDragEnd: hopCtr.onDragEnd,
-                      onDragUpdate: hopCtr.onDragUpdate,
+                      flutterExtendedProgressBarConfig: flutterExtendedCtr.flutterExtendedProgressBarConfig,
+                      onDragStart: flutterExtendedCtr.onDragStart,
+                      onDragEnd: flutterExtendedCtr.onDragEnd,
+                      onDragUpdate: flutterExtendedCtr.onDragUpdate,
                     ),
                   ),
                 );
               }
-              return HopProgressBar(
+              return FlutterExtendedProgressBar(
                 tag: tag,
                 alignment: Alignment.bottomCenter,
-                hopProgressBarConfig: hopCtr.hopProgressBarConfig,
-                onDragStart: hopCtr.onDragStart,
-                onDragEnd: hopCtr.onDragEnd,
-                onDragUpdate: hopCtr.onDragUpdate,
+                flutterExtendedProgressBarConfig: flutterExtendedCtr.flutterExtendedProgressBarConfig,
+                onDragStart: flutterExtendedCtr.onDragStart,
+                onDragEnd: flutterExtendedCtr.onDragEnd,
+                onDragUpdate: flutterExtendedCtr.onDragUpdate,
               );
             },
           ),

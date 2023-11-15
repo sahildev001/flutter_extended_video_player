@@ -1,4 +1,4 @@
-part of 'package:hop_video_player/src/hop_video_player.dart';
+part of 'package:flutter_extended_video_player/src/flutter_extended_video_player.dart';
 
 class _WebSettingsDropdown extends StatefulWidget {
   final String tag;
@@ -18,45 +18,45 @@ class _WebSettingsDropdownState extends State<_WebSettingsDropdown> {
       data: Theme.of(context).copyWith(
         focusColor: Colors.white,
       ),
-      child: GetBuilder<HopVideoPlayerGetXVideoController>(
+      child: GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
         tag: widget.tag,
-        builder: (hopCtr) {
+        builder: (flutterExtendedCtr) {
           return MaterialIconButton(
-            toolTipMesg: hopCtr.hopVideoPlayerLabels.settings,
+            toolTipMesg: flutterExtendedCtr.flutterExtendedVideoPlayerLables.settings,
             color: Colors.white,
             child: const Icon(Icons.settings),
-            onPressed: () => hopCtr.isFullScreen
-                ? hopCtr.isWebPopupOverlayOpen = true
-                : hopCtr.isWebPopupOverlayOpen = false,
+            onPressed: () => flutterExtendedCtr.isFullScreen
+                ? flutterExtendedCtr.isWebPopupOverlayOpen = true
+                : flutterExtendedCtr.isWebPopupOverlayOpen = false,
             onTapDown: (details) async {
               final settingsMenu = await showMenu<String>(
                 context: context,
                 items: [
-                  if (hopCtr.vimeoOrVideoUrls.isNotEmpty)
+                  if (flutterExtendedCtr.vimeoOrVideoUrls.isNotEmpty)
                     PopupMenuItem(
                       value: 'OUALITY',
                       child: _bottomSheetTiles(
-                        title: hopCtr.hopVideoPlayerLabels.quality,
+                        title: flutterExtendedCtr.flutterExtendedVideoPlayerLables.quality,
                         icon: Icons.video_settings_rounded,
-                        subText: '${hopCtr.vimeoPlayingVideoQuality}p',
+                        subText: '${flutterExtendedCtr.vimeoPlayingVideoQuality}p',
                       ),
                     ),
                   PopupMenuItem(
                     value: 'LOOP',
                     child: _bottomSheetTiles(
-                      title: hopCtr.hopVideoPlayerLabels.loopVideo,
+                      title: flutterExtendedCtr.flutterExtendedVideoPlayerLables.loopVideo,
                       icon: Icons.loop_rounded,
-                      subText: hopCtr.isLooping
-                          ? hopCtr.hopVideoPlayerLabels.optionEnabled
-                          : hopCtr.hopVideoPlayerLabels.optionDisabled,
+                      subText: flutterExtendedCtr.isLooping
+                          ? flutterExtendedCtr.flutterExtendedVideoPlayerLables.optionEnabled
+                          : flutterExtendedCtr.flutterExtendedVideoPlayerLables.optionDisabled,
                     ),
                   ),
                   PopupMenuItem(
                     value: 'SPEED',
                     child: _bottomSheetTiles(
-                      title: hopCtr.hopVideoPlayerLabels.playbackSpeed,
+                      title: flutterExtendedCtr.flutterExtendedVideoPlayerLables.playbackSpeed,
                       icon: Icons.slow_motion_video_rounded,
-                      subText: hopCtr.currentPaybackSpeed,
+                      subText: flutterExtendedCtr.currentPaybackSpeed,
                     ),
                   ),
                 ],
@@ -67,17 +67,17 @@ class _WebSettingsDropdownState extends State<_WebSettingsDropdown> {
               );
               switch (settingsMenu) {
                 case 'OUALITY':
-                  await _onVimeoQualitySelect(details, hopCtr);
+                  await _onVimeoQualitySelect(details, flutterExtendedCtr);
                   break;
                 case 'SPEED':
-                  await _onPlaybackSpeedSelect(details, hopCtr);
+                  await _onPlaybackSpeedSelect(details, flutterExtendedCtr);
                   break;
                 case 'LOOP':
-                  hopCtr.isWebPopupOverlayOpen = false;
-                  await hopCtr.toggleLooping();
+                  flutterExtendedCtr.isWebPopupOverlayOpen = false;
+                  await flutterExtendedCtr.toggleLooping();
                   break;
                 default:
-                  hopCtr.isWebPopupOverlayOpen = false;
+                  flutterExtendedCtr.isWebPopupOverlayOpen = false;
               }
             },
           );
@@ -88,21 +88,21 @@ class _WebSettingsDropdownState extends State<_WebSettingsDropdown> {
 
   Future<void> _onPlaybackSpeedSelect(
     TapDownDetails details,
-    HopVideoPlayerGetXVideoController hopCtr,
+      FlutterExtendedVideoPlayerGetXVideoController flutterExtendedCtr,
   ) async {
     await Future<void>.delayed(
       const Duration(milliseconds: 400),
     );
     await showMenu(
       context: context,
-      items: hopCtr.videoPlaybackSpeeds
+      items: flutterExtendedCtr.videoPlaybackSpeeds
           .map(
             (e) => PopupMenuItem<dynamic>(
               child: ListTile(
                 title: Text(e),
               ),
               onTap: () {
-                hopCtr.setVideoPlayBack(e);
+                flutterExtendedCtr.setVideoPlayBack(e);
               },
             ),
           )
@@ -113,26 +113,26 @@ class _WebSettingsDropdownState extends State<_WebSettingsDropdown> {
         MediaQuery.of(context).size,
       ),
     );
-    hopCtr.isWebPopupOverlayOpen = false;
+    flutterExtendedCtr.isWebPopupOverlayOpen = false;
   }
 
   Future<void> _onVimeoQualitySelect(
     TapDownDetails details,
-    HopVideoPlayerGetXVideoController hopCtr,
+      FlutterExtendedVideoPlayerGetXVideoController flutterExtendedCtr,
   ) async {
     await Future<void>.delayed(
       const Duration(milliseconds: 400),
     );
     await showMenu(
       context: context,
-      items: hopCtr.vimeoOrVideoUrls
+      items: flutterExtendedCtr.vimeoOrVideoUrls
           .map(
             (e) => PopupMenuItem<dynamic>(
               child: ListTile(
                 title: Text('${e.quality}p'),
               ),
               onTap: () {
-                hopCtr.changeVideoQuality(
+                flutterExtendedCtr.changeVideoQuality(
                   e.quality,
                 );
               },
@@ -145,7 +145,7 @@ class _WebSettingsDropdownState extends State<_WebSettingsDropdown> {
         MediaQuery.of(context).size,
       ),
     );
-    hopCtr.isWebPopupOverlayOpen = false;
+    flutterExtendedCtr.isWebPopupOverlayOpen = false;
   }
 
   Widget _bottomSheetTiles({

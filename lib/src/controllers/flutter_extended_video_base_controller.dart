@@ -1,12 +1,12 @@
-part of 'hop_getx_video_controller.dart';
+part of 'flutter_extended_getx_video_controller.dart';
 // ignore_for_file: prefer_final_fields
 
-class _HopVideoBaseController extends GetxController {
+class _FlutterExtendedVideoBaseController extends GetxController {
   ///main video controller
   VideoPlayerController? _videoCtr;
 
   ///
-  late HopVideoPlayerType _videoPlayerType;
+  late FlutterExtendedVideoPlayerType _videoPlayerType;
 
   bool isMute = false;
   FocusNode? keyboardFocusWeb;
@@ -15,7 +15,7 @@ class _HopVideoBaseController extends GetxController {
   bool _isWebAutoPlayDone = false;
 
   ///
-  HopVideoPlayerVideoState _hopVideoPlayerVideoState = HopVideoPlayerVideoState.loading;
+  FlutterExtendedVideoPlayerVideoState _flutterExtendedVideoPlayerVideoState = FlutterExtendedVideoPlayerVideoState.loading;
 
   ///
   bool isWebPopupOverlayOpen = false;
@@ -52,8 +52,8 @@ class _HopVideoBaseController extends GetxController {
     }
 
     if(_videoCtr!.value.isCompleted){
-      hopVideoStateChanger(HopVideoPlayerVideoState.finished);
-      hopVideoStateChanger(HopVideoPlayerVideoState.paused);
+      flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.finished);
+      flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.paused);
     }
   }
 
@@ -77,12 +77,12 @@ class _HopVideoBaseController extends GetxController {
 
 
 
-  ///updates state with id `_hopVideoPlayerVideoState`
-  void hopVideoStateChanger(HopVideoPlayerVideoState? val, {bool updateUi = true}) {
-    if (_hopVideoPlayerVideoState != (val ?? _hopVideoPlayerVideoState)) {
-      _hopVideoPlayerVideoState = val ?? _hopVideoPlayerVideoState;
+  ///updates state with id `_flutterExtendedVideoPlayerVideoState`
+  void flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState? val, {bool updateUi = true}) {
+    if (_flutterExtendedVideoPlayerVideoState != (val ?? _flutterExtendedVideoPlayerVideoState)) {
+      _flutterExtendedVideoPlayerVideoState = val ?? _flutterExtendedVideoPlayerVideoState;
       if (updateUi) {
-        update(['hopVideoPlayerVideoState']);
+        update(['flutterExtendedVideoPlayerVideoState']);
         update(['update-all']);
       }
     }

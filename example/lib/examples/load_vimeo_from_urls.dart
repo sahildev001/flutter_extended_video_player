@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 
 void main(List<String> args) {
   runApp(const VimeoApp());
@@ -27,7 +27,7 @@ class VimeoVideoViewer extends StatefulWidget {
 }
 
 class VimeoVideoViewerState extends State<VimeoVideoViewer> {
-  late final HopVideoPlayerController controller;
+  late final FlutterExtendedVideoPlayerController controller;
   bool isLoading = true;
   @override
   void initState() {
@@ -36,11 +36,11 @@ class VimeoVideoViewerState extends State<VimeoVideoViewer> {
   }
 
   void loadVideo() async {
-    final urls = await HopVideoPlayerController.getVimeoUrls('518228118');
+    final urls = await FlutterExtendedVideoPlayerController.getVimeoUrls('518228118');
     setState(() => isLoading = false);
-    controller = HopVideoPlayerController(
+    controller = FlutterExtendedVideoPlayerController(
       playVideoFrom: PlayVideoFrom.networkQualityUrls(videoUrls: urls!),
-      hopPlayerConfig: const HopPlayerConfig(
+      flutterExtendedPlayerConfig: const FlutterExtendedPlayerConfig(
         videoQualityPriority: [360],
       ),
     )..initialise();
@@ -50,6 +50,6 @@ class VimeoVideoViewerState extends State<VimeoVideoViewer> {
   Widget build(BuildContext context) {
     return isLoading
         ? const Center(child: CircularProgressIndicator())
-        : Center(child: HopVideoPlayer(controller: controller));
+        : Center(child: FlutterExtendedVideoPlayer(controller: controller));
   }
 }

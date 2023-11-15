@@ -1,6 +1,6 @@
-part of 'hop_getx_video_controller.dart';
+part of 'flutter_extended_getx_video_controller.dart';
 
-class _HopVideoQualityController extends _HopVideoController {
+class _FlutterExtendedVideoQualityController extends _FlutterExtendedVideoController {
   ///
   int? vimeoPlayingVideoQuality;
 
@@ -19,7 +19,7 @@ class _HopVideoQualityController extends _HopVideoController {
     String? hash,
   }) async {
     try {
-      hopVideoStateChanger(HopVideoPlayerVideoState.loading);
+      flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.loading);
       final vimeoVideoUrls = await VideoApis.getVimeoVideoQualityUrls(
         videoId,
         hash,
@@ -37,7 +37,7 @@ class _HopVideoQualityController extends _HopVideoController {
     Map<String, String> httpHeader,
   ) async {
     try {
-      hopVideoStateChanger(HopVideoPlayerVideoState.loading);
+      flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.loading);
       final vimeoVideoUrls =
           await VideoApis.getVimeoPrivateVideoQualityUrls(videoId, httpHeader);
 
@@ -121,11 +121,11 @@ class _HopVideoQualityController extends _HopVideoController {
           .where((element) => element.quality == quality)
           .first
           .url;
-      HopVideoPlayerLog(_videoQualityUrl);
+      FlutterExtendedVideoPlayerLog(_videoQualityUrl);
       vimeoPlayingVideoQuality = quality;
       _videoCtr?.removeListener(videoListner);
-      hopVideoStateChanger(HopVideoPlayerVideoState.paused);
-      hopVideoStateChanger(HopVideoPlayerVideoState.loading);
+      flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.paused);
+      flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.loading);
       playingVideoUrl = _videoQualityUrl;
       _videoCtr = VideoPlayerController.networkUrl(Uri.parse(_videoQualityUrl));
       await _videoCtr?.initialize();
@@ -133,7 +133,7 @@ class _HopVideoQualityController extends _HopVideoController {
       _videoCtr?.addListener(videoListner);
       await _videoCtr?.seekTo(_videoPosition);
       setVideoPlayBack(_currentPaybackSpeed);
-      hopVideoStateChanger(HopVideoPlayerVideoState.playing);
+      flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.playing);
       onVimeoVideoQualityChanged?.call();
       update();
       update(['update-all']);

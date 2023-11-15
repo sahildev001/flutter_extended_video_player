@@ -1,6 +1,6 @@
-part of 'hop_getx_video_controller.dart';
+part of 'flutter_extended_getx_video_controller.dart';
 
-class _HopVideoController extends _HopUiController {
+class _FlutterExtendedVideoController extends _FlutterExtendedUiController {
   Timer? showOverlayTimer;
   Timer? showOverlayTimer1;
 
@@ -113,8 +113,8 @@ class _HopVideoController extends _HopUiController {
   ///toogle play pause
   void togglePlayPauseVideo() {
     isvideoPlaying = !isvideoPlaying;
-    hopVideoStateChanger(
-      isvideoPlaying ? HopVideoPlayerVideoState.playing : HopVideoPlayerVideoState.paused,
+    flutterExtendedVideoStateChanger(
+      isvideoPlaying ? FlutterExtendedVideoPlayerVideoState.playing : FlutterExtendedVideoPlayerVideoState.paused,
     );
   }
 
@@ -179,7 +179,7 @@ class _HopVideoController extends _HopUiController {
   }
 
   Future<void> enableFullScreen(String tag) async {
-    HopVideoPlayerLog('-full-screen-enable-entred');
+    FlutterExtendedVideoPlayerLog('-full-screen-enable-entred');
     if (!isFullScreen) {
       if (onToggleFullScreen != null) {
         await onToggleFullScreen!(true);
@@ -209,7 +209,7 @@ class _HopVideoController extends _HopUiController {
     String tag, {
     bool enablePop = true,
   }) async {
-    HopVideoPlayerLog('-full-screen-disable-entred');
+    FlutterExtendedVideoPlayerLog('-full-screen-disable-entred');
     if (isFullScreen) {
       if (onToggleFullScreen != null) {
         await onToggleFullScreen!(false);
@@ -237,13 +237,13 @@ class _HopVideoController extends _HopUiController {
   }
 
   void _exitFullScreenView(BuildContext context, String tag) {
-    HopVideoPlayerLog('popped-full-screen');
+    FlutterExtendedVideoPlayerLog('popped-full-screen');
     Navigator.of(fullScreenContext).pop();
   }
 
   void _enableFullScreenView(String tag) {
     if (!isFullScreen) {
-      HopVideoPlayerLog('full-screen-enabled');
+      FlutterExtendedVideoPlayerLog('full-screen-enabled');
 
       Navigator.push(
         mainContext,

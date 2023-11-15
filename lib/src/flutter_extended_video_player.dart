@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:universal_html/html.dart' as uni_html;
 
-import '../hop_video_player.dart';
-import 'controllers/hop_getx_video_controller.dart';
+import '../flutter_extended_video_player.dart';
+import 'controllers/flutter_extended_getx_video_controller.dart';
 import 'utils/logger.dart';
 import 'widgets/double_tap_icon.dart';
 import 'widgets/material_icon_button.dart';
@@ -24,21 +24,21 @@ part 'widgets/core/overlays/web_dropdown_menu.dart';
 
 part 'widgets/core/overlays/web_overlay.dart';
 
-part 'widgets/core/hop_video_core_player.dart';
+part 'widgets/core/flutter_extended_video_core_player.dart';
 
 part 'widgets/core/video_gesture_detector.dart';
 
 part 'widgets/full_screen_view.dart';
 
-class HopVideoPlayer extends StatefulWidget {
-  final HopVideoPlayerController controller;
+class FlutterExtendedVideoPlayer extends StatefulWidget {
+  final FlutterExtendedVideoPlayerController controller;
   final double frameAspectRatio;
   final double videoAspectRatio;
   final bool alwaysShowProgressBar;
   final bool matchVideoAspectRatioToFrame;
   final bool matchFrameAspectRatioToVideo;
-  final HopProgressBarConfig hopProgressBarConfig;
-  final HopVideoPlayerLabels hopPlayerLabels;
+  final FlutterExtendedProgressBarConfig flutterExtendedProgressBarConfig;
+  final FlutterExtendedVideoPlayerLables flutterExtendedVideoPlayerLables;
   final Widget Function(OverLayOptions options)? overlayBuilder;
   final Widget Function()? onVideoError;
   final Widget? videoTitle;
@@ -55,14 +55,14 @@ class HopVideoPlayer extends StatefulWidget {
   /// If no widget is informed, a default [CircularProgressIndicator] will be shown.
   final WidgetBuilder? onLoading;
 
-  HopVideoPlayer({
+  FlutterExtendedVideoPlayer({
     required this.controller,
     super.key,
     this.frameAspectRatio = 16 / 9,
     this.videoAspectRatio = 16 / 9,
     this.alwaysShowProgressBar = true,
-    this.hopProgressBarConfig = const HopProgressBarConfig(),
-    this.hopPlayerLabels = const HopVideoPlayerLabels(),
+    this.flutterExtendedProgressBarConfig = const FlutterExtendedProgressBarConfig(),
+    this.flutterExtendedVideoPlayerLables = const FlutterExtendedVideoPlayerLables(),
     this.overlayBuilder,
     this.videoTitle,
     this.matchVideoAspectRatioToFrame = false,
@@ -81,12 +81,12 @@ class HopVideoPlayer extends StatefulWidget {
   static bool enableGetxLogs = false;
 
   void addToUiController() {
-    Get.find<HopVideoPlayerGetXVideoController>(tag: controller.getTag)
+    Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: controller.getTag)
 
       ///add to ui controller
-      ..hopVideoPlayerLabels = hopPlayerLabels
+      ..flutterExtendedVideoPlayerLables = flutterExtendedVideoPlayerLables
       ..alwaysShowProgressBar = alwaysShowProgressBar
-      ..hopProgressBarConfig = hopProgressBarConfig
+      ..flutterExtendedProgressBarConfig = flutterExtendedProgressBarConfig
       ..overlayBuilder = overlayBuilder
       ..videoTitle = videoTitle
       ..onToggleFullScreen = onToggleFullScreen
@@ -95,30 +95,30 @@ class HopVideoPlayer extends StatefulWidget {
   }
 
   @override
-  State<HopVideoPlayer> createState() => _HopVideoPlayerState();
+  State<FlutterExtendedVideoPlayer> createState() => _FlutterExtendedVideoPlayerState();
 }
 
-class _HopVideoPlayerState extends State<HopVideoPlayer>
+class _FlutterExtendedVideoPlayerState extends State<FlutterExtendedVideoPlayer>
     with TickerProviderStateMixin {
-  late HopVideoPlayerGetXVideoController _hopCtr;
+  late FlutterExtendedVideoPlayerGetXVideoController _flutterExtendedCtr;
 
   // late String tag;
   @override
   void initState() {
     super.initState();
     // tag = widget.controller?.tag ?? UniqueKey().toString();
-    _hopCtr = Get.put(
-      HopVideoPlayerGetXVideoController(),
+    _flutterExtendedCtr = Get.put(
+      FlutterExtendedVideoPlayerGetXVideoController(),
       permanent: true,
       tag: widget.controller.getTag,
     )..isVideoUiBinded = true;
-    if (_hopCtr.wasVideoPlayingOnUiDispose ?? false) {
-      _hopCtr.hopVideoStateChanger(HopVideoPlayerVideoState.playing, updateUi: false);
+    if (_flutterExtendedCtr.wasVideoPlayingOnUiDispose ?? false) {
+      _flutterExtendedCtr.flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.playing, updateUi: false);
     }
     if (kIsWeb) {
-      if (widget.controller.hopPlayerConfig.forcedVideoFocus) {
-        _hopCtr.keyboardFocusWeb = FocusNode();
-        _hopCtr.keyboardFocusWeb?.addListener(_hopCtr.keyboadListner);
+      if (widget.controller.flutterExtendedPlayerConfig.forcedVideoFocus) {
+        _flutterExtendedCtr.keyboardFocusWeb = FocusNode();
+        _flutterExtendedCtr.keyboardFocusWeb?.addListener(_flutterExtendedCtr.keyboadListner);
       }
       //to disable mouse right click
       uni_html.document.onContextMenu.listen((event) => event.preventDefault());
@@ -130,25 +130,23 @@ class _HopVideoPlayerState extends State<HopVideoPlayer>
     super.dispose();
 
     ///Checking if the video was playing when this widget is disposed
-    if (_hopCtr.isvideoPlaying) {
-      _hopCtr.wasVideoPlayingOnUiDispose = true;
+    if (_flutterExtendedCtr.isvideoPlaying) {
+      _flutterExtendedCtr.wasVideoPlayingOnUiDispose = true;
     } else {
-      _hopCtr.wasVideoPlayingOnUiDispose = false;
+      _flutterExtendedCtr.wasVideoPlayingOnUiDispose = false;
     }
-    _hopCtr
+    _flutterExtendedCtr
       ..isVideoUiBinded = false
-      ..hopVideoStateChanger(HopVideoPlayerVideoState.paused, updateUi: false);
+      ..flutterExtendedVideoStateChanger(FlutterExtendedVideoPlayerVideoState.paused, updateUi: false);
     if (kIsWeb) {
-      _hopCtr.keyboardFocusWeb?.removeListener(_hopCtr.keyboadListner);
+      _flutterExtendedCtr.keyboardFocusWeb?.removeListener(_flutterExtendedCtr.keyboadListner);
     }
-    // _hopCtr.keyboardFocus?.unfocus();
-    // _hopCtr.keyboardFocusOnFullScreen?.unfocus();
-    _hopCtr.hoverOverlayTimer?.cancel();
-    _hopCtr.showOverlayTimer?.cancel();
-    _hopCtr.showOverlayTimer1?.cancel();
-    _hopCtr.leftDoubleTapTimer?.cancel();
-    _hopCtr.rightDoubleTapTimer?.cancel();
-    HopVideoPlayerLog('local HopVideoPlayer disposed');
+    _flutterExtendedCtr.hoverOverlayTimer?.cancel();
+    _flutterExtendedCtr.showOverlayTimer?.cancel();
+    _flutterExtendedCtr.showOverlayTimer1?.cancel();
+    _flutterExtendedCtr.leftDoubleTapTimer?.cancel();
+    _flutterExtendedCtr.rightDoubleTapTimer?.cancel();
+    FlutterExtendedVideoPlayerLog('local FlutterExtendedVideoPlayer disposed');
   }
 
   ///
@@ -157,7 +155,7 @@ class _HopVideoPlayerState extends State<HopVideoPlayer>
   @override
   Widget build(BuildContext context) {
     final circularProgressIndicator = _thumbnailAndLoadingWidget();
-    _hopCtr.mainContext = context;
+    _flutterExtendedCtr.mainContext = context;
 
     final videoErrorWidget = AspectRatio(
       aspectRatio: _frameAspectRatio,
@@ -172,34 +170,34 @@ class _HopVideoPlayerState extends State<HopVideoPlayer>
             ),
             const SizedBox(height: 20),
             Text(
-              widget.hopPlayerLabels.error,
+              widget.flutterExtendedVideoPlayerLables.error,
               style: const TextStyle(color: Colors.red),
             ),
           ],
         ),
       ),
     );
-    return GetBuilder<HopVideoPlayerGetXVideoController>(
+    return GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
       tag: widget.controller.getTag,
       builder: (_) {
         _frameAspectRatio = widget.matchFrameAspectRatioToVideo
-            ? _hopCtr.videoCtr?.value.aspectRatio ?? widget.frameAspectRatio
+            ? _flutterExtendedCtr.videoCtr?.value.aspectRatio ?? widget.frameAspectRatio
             : widget.frameAspectRatio;
         return Center(
           child: ColoredBox(
             color: widget.backgroundColor ?? Colors.black,
-            child: GetBuilder<HopVideoPlayerGetXVideoController>(
+            child: GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
               tag: widget.controller.getTag,
               id: 'errorState',
-              builder: (hopCtr) {
+              builder: (flutterExtendedCtr) {
                 /// Check if has any error
-                if (hopCtr.hopVideoPlayerVideoState == HopVideoPlayerVideoState.error) {
+                if (flutterExtendedCtr.flutterExtendedVideoPlayerVideoState == FlutterExtendedVideoPlayerVideoState.error) {
                   return widget.onVideoError?.call() ?? videoErrorWidget;
                 }
 
                 return AspectRatio(
                   aspectRatio: _frameAspectRatio,
-                  child: hopCtr.videoCtr?.value.isInitialized ?? false
+                  child: flutterExtendedCtr.videoCtr?.value.isInitialized ?? false
                       ? _buildPlayer()
                       : Center(child: circularProgressIndicator),
                 );
@@ -245,16 +243,16 @@ class _HopVideoPlayerState extends State<HopVideoPlayer>
 
   Widget _buildPlayer() {
     final videoAspectRatio = widget.matchVideoAspectRatioToFrame
-        ? _hopCtr.videoCtr?.value.aspectRatio ?? widget.videoAspectRatio
+        ? _flutterExtendedCtr.videoCtr?.value.aspectRatio ?? widget.videoAspectRatio
         : widget.videoAspectRatio;
     if (kIsWeb) {
-      return GetBuilder<HopVideoPlayerGetXVideoController>(
+      return GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
         tag: widget.controller.getTag,
         id: 'full-screen',
-        builder: (hopCtr) {
-          if (hopCtr.isFullScreen) return _thumbnailAndLoadingWidget();
-          return _HopCoreVideoPlayer(
-            videoPlayerCtr: hopCtr.videoCtr!,
+        builder: (flutterExtendedCtr) {
+          if (flutterExtendedCtr.isFullScreen) return _thumbnailAndLoadingWidget();
+          return _FlutterExtendedCoreVideoPlayer(
+            videoPlayerCtr: flutterExtendedCtr.videoCtr!,
             videoAspectRatio: videoAspectRatio,
             tag: widget.controller.getTag,
 
@@ -263,8 +261,8 @@ class _HopVideoPlayerState extends State<HopVideoPlayer>
       );
     } else {
 
-      return _HopCoreVideoPlayer(
-        videoPlayerCtr: _hopCtr.videoCtr!,
+      return _FlutterExtendedCoreVideoPlayer(
+        videoPlayerCtr: _flutterExtendedCtr.videoCtr!,
         videoAspectRatio: videoAspectRatio,
         tag: widget.controller.getTag,
       );

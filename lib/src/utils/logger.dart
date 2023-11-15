@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import '../../hop_video_player.dart';
+import '../../flutter_extended_video_player.dart';
 
-void HopVideoPlayerLog(String message) =>
-    HopVideoPlayer.enableLogs ? log(message, name: 'HopVideoPlayer') : null;
+void FlutterExtendedVideoPlayerLog(String message) =>
+    FlutterExtendedVideoPlayer.enableLogs ? log(message, name: 'FlutterExtendedVideoPlayer') : null;

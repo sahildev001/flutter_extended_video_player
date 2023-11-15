@@ -1,4 +1,4 @@
-part of 'package:hop_video_player/src/hop_video_player.dart';
+part of 'package:flutter_extended_video_player/src/flutter_extended_video_player.dart';
 
 class _AnimatedPlayPauseIcon extends StatefulWidget {
   final double? size;
@@ -16,16 +16,16 @@ class _AnimatedPlayPauseIcon extends StatefulWidget {
 class _AnimatedPlayPauseIconState extends State<_AnimatedPlayPauseIcon>
     with SingleTickerProviderStateMixin {
   late final AnimationController _payCtr;
-  late HopVideoPlayerGetXVideoController _hopCtr;
+  late FlutterExtendedVideoPlayerGetXVideoController _flutterExtendedCtr;
   @override
   void initState() {
-    _hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: widget.tag);
+    _flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: widget.tag);
     _payCtr = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _hopCtr.addListenerId('hopVideoPlayerVideoState', playPauseListner);
-    if (_hopCtr.isvideoPlaying) {
+    _flutterExtendedCtr.addListenerId('flutterExtendedVideoPlayerVideoState', playPauseListner);
+    if (_flutterExtendedCtr.isvideoPlaying) {
       if (mounted) _payCtr.forward();
     }
     super.initState();
@@ -33,10 +33,10 @@ class _AnimatedPlayPauseIconState extends State<_AnimatedPlayPauseIcon>
 
   void playPauseListner() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (_hopCtr.hopVideoPlayerVideoState == HopVideoPlayerVideoState.playing) {
+      if (_flutterExtendedCtr.flutterExtendedVideoPlayerVideoState == FlutterExtendedVideoPlayerVideoState.playing) {
         if (mounted) _payCtr.forward();
       }
-      if (_hopCtr.hopVideoPlayerVideoState == HopVideoPlayerVideoState.paused) {
+      if (_flutterExtendedCtr.flutterExtendedVideoPlayerVideoState == FlutterExtendedVideoPlayerVideoState.paused) {
 
         if (mounted) _payCtr.reverse();
       }
@@ -51,38 +51,38 @@ class _AnimatedPlayPauseIconState extends State<_AnimatedPlayPauseIcon>
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HopVideoPlayerGetXVideoController>(
+    return GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
       tag: widget.tag,
       id: 'overlay',
-      builder: (hopCtr) {
-        return GetBuilder<HopVideoPlayerGetXVideoController>(
+      builder: (flutterExtendedCtr) {
+        return GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
           tag: widget.tag,
-          id: 'hopVideoPlayerVideoState',
+          id: 'flutterExtendedVideoPlayerVideoState',
           builder: (f) => MaterialIconButton(
             toolTipMesg: f.isvideoPlaying
-                ? hopCtr.hopVideoPlayerLabels.pause ??
+                ? flutterExtendedCtr.flutterExtendedVideoPlayerLables.pause ??
                     'Pause${kIsWeb ? ' (space)' : ''}'
-                : hopCtr.hopVideoPlayerLabels.play ??
+                : flutterExtendedCtr.flutterExtendedVideoPlayerLables.play ??
                     'Play${kIsWeb ? ' (space)' : ''}',
             onPressed:
-                hopCtr.isOverlayVisible ? hopCtr.togglePlayPauseVideo : null,
-            child: onStateChange(hopCtr),
+                flutterExtendedCtr.isOverlayVisible ? flutterExtendedCtr.togglePlayPauseVideo : null,
+            child: onStateChange(flutterExtendedCtr),
           ),
         );
       },
     );
   }
 
-  Widget onStateChange(HopVideoPlayerGetXVideoController hopCtr) {
-    if (kIsWeb) return _playPause(hopCtr);
-    if (hopCtr.hopVideoPlayerVideoState == HopVideoPlayerVideoState.loading) {
+  Widget onStateChange(FlutterExtendedVideoPlayerGetXVideoController flutterExtendedCtr) {
+    if (kIsWeb) return _playPause(flutterExtendedCtr);
+    if (flutterExtendedCtr.flutterExtendedVideoPlayerVideoState == FlutterExtendedVideoPlayerVideoState.loading) {
       return const SizedBox();
     } else {
-      return _playPause(hopCtr);
+      return _playPause(flutterExtendedCtr);
     }
   }
 
-  Widget _playPause(HopVideoPlayerGetXVideoController hopCtr) {
+  Widget _playPause(FlutterExtendedVideoPlayerGetXVideoController flutterExtendedCtr) {
     return AnimatedIcon(
       icon: AnimatedIcons.play_pause,
       progress: _payCtr,

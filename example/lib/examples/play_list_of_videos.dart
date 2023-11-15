@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hop_video_player/hop_video_player.dart';
+import 'package:flutter_extended_video_player/flutter_extended_video_player.dart';
 
 void main(List<String> args) {
-  HopVideoPlayer.enableLogs = true;
+  FlutterExtendedVideoPlayer.enableLogs = true;
   runApp(const ListOfVideosApp());
 }
 
@@ -108,7 +108,7 @@ class ListOfVideosViewer extends StatefulWidget {
 }
 
 class _ListOfVideosViewerState extends State<ListOfVideosViewer> {
-  List<HopVideoPlayerController> controllers = [];
+  List<FlutterExtendedVideoPlayerController> controllers = [];
 
   @override
   void initState() {
@@ -119,9 +119,9 @@ class _ListOfVideosViewerState extends State<ListOfVideosViewer> {
   void initListOfVideos(PlayVideoFrom playVideoFrom) {
     //* lazily Initialise
     controllers.add(
-      HopVideoPlayerController(
+      FlutterExtendedVideoPlayerController(
         playVideoFrom: playVideoFrom,
-        hopPlayerConfig: const HopPlayerConfig(autoPlay: false),
+        flutterExtendedPlayerConfig: const FlutterExtendedPlayerConfig(autoPlay: false),
       ),
     );
 
@@ -134,7 +134,7 @@ class _ListOfVideosViewerState extends State<ListOfVideosViewer> {
     super.dispose();
   }
 
-  void _disposeCtr(HopVideoPlayerController ctr) => ctr.dispose();
+  void _disposeCtr(FlutterExtendedVideoPlayerController ctr) => ctr.dispose();
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +145,7 @@ class _ListOfVideosViewerState extends State<ListOfVideosViewer> {
         controllers[index].initialise();
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 40),
-          child: HopVideoPlayer(controller: controllers[index]),
+          child: FlutterExtendedVideoPlayer(controller: controllers[index]),
         );
       },
     );

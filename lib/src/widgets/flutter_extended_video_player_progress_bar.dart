@@ -3,22 +3,22 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:video_player/video_player.dart';
 
-import '../controllers/hop_getx_video_controller.dart';
-import '../models/hop_progress_bar_config.dart';
+import '../controllers/flutter_extended_getx_video_controller.dart';
+import '../models/flutter_extended_progress_bar_config.dart';
 /// Renders progress bar for the video using custom paint.
-class HopProgressBar extends StatefulWidget {
-  const HopProgressBar({
+class FlutterExtendedProgressBar extends StatefulWidget {
+  const FlutterExtendedProgressBar({
     required this.tag,
     super.key,
-    HopProgressBarConfig? hopProgressBarConfig,
+    FlutterExtendedProgressBarConfig? flutterExtendedProgressBarConfig,
     this.onDragStart,
     this.onDragEnd,
     this.onDragUpdate,
     this.alignment = Alignment.center,
-  }) : hopProgressBarConfig =
-            hopProgressBarConfig ?? const HopProgressBarConfig();
+  }) : flutterExtendedProgressBarConfig =
+            flutterExtendedProgressBarConfig ?? const FlutterExtendedProgressBarConfig();
 
-  final HopProgressBarConfig hopProgressBarConfig;
+  final FlutterExtendedProgressBarConfig flutterExtendedProgressBarConfig;
   final void Function(Duration duration)? onDragStart;
   final void Function(Duration duration)? onDragEnd;
   final void Function(Duration duration)? onDragUpdate;
@@ -26,12 +26,12 @@ class HopProgressBar extends StatefulWidget {
   final String tag;
 
   @override
-  State<HopProgressBar> createState() => _HopProgressBarState();
+  State<FlutterExtendedProgressBar> createState() => _FlutterExtendedProgressBarState();
 }
 
-class _HopProgressBarState extends State<HopProgressBar> {
-  late final _hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: widget.tag);
-  late VideoPlayerValue? videoPlayerValue = _hopCtr.videoCtr?.value;
+class _FlutterExtendedProgressBarState extends State<FlutterExtendedProgressBar> {
+  late final _flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: widget.tag);
+  late VideoPlayerValue? videoPlayerValue = _flutterExtendedCtr.videoCtr?.value;
   bool _controllerWasPlaying = false;
 
   void seekToRelativePosition(Offset globalPosition) {
@@ -41,7 +41,7 @@ class _HopProgressBarState extends State<HopProgressBar> {
       final double relative = tapPos.dx / box.size.width;
       final Duration position =
           (videoPlayerValue?.duration ?? Duration.zero) * relative;
-      _hopCtr.seekTo(position);
+      _flutterExtendedCtr.seekTo(position);
     }
   }
 
@@ -49,11 +49,11 @@ class _HopProgressBarState extends State<HopProgressBar> {
   Widget build(BuildContext context) {
     if (videoPlayerValue == null) return const SizedBox();
 
-    return GetBuilder<HopVideoPlayerGetXVideoController>(
+    return GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
       tag: widget.tag,
       id: 'video-progress',
-      builder: (hopCtr) {
-        videoPlayerValue = hopCtr.videoCtr?.value;
+      builder: (flutterExtendedCtr) {
+        videoPlayerValue = flutterExtendedCtr.videoCtr?.value;
         return LayoutBuilder(
           builder: (context, size) {
             return GestureDetector(
@@ -64,35 +64,35 @@ class _HopProgressBarState extends State<HopProgressBar> {
                   return;
                 }
                 _controllerWasPlaying =
-                    hopCtr.videoCtr?.value.isPlaying ?? false;
+                    flutterExtendedCtr.videoCtr?.value.isPlaying ?? false;
 
                 if (_controllerWasPlaying) {
 
-                  hopCtr.videoCtr?.pause();
+                  flutterExtendedCtr.videoCtr?.pause();
                 }
                if (widget.onDragStart != null) {
-                   widget.onDragStart?.call(hopCtr.videoPosition);
+                   widget.onDragStart?.call(flutterExtendedCtr.videoPosition);
                 }
               },
               onHorizontalDragUpdate: (DragUpdateDetails details) {
                 if (!videoPlayerValue!.isInitialized) {
                   return;
                 }
-                hopCtr.isShowOverlay(true);
+                flutterExtendedCtr.isShowOverlay(true);
                 seekToRelativePosition(details.globalPosition);
 
                 if(widget.onDragUpdate != null) {
-                  widget.onDragUpdate?.call(hopCtr.videoPosition);
+                  widget.onDragUpdate?.call(flutterExtendedCtr.videoPosition);
                 }
               },
               onHorizontalDragEnd: (DragEndDetails details) {
                 if (_controllerWasPlaying) {
-                  hopCtr.videoCtr?.play();
+                  flutterExtendedCtr.videoCtr?.play();
                 }
-                hopCtr.toggleVideoOverlay();
+                flutterExtendedCtr.toggleVideoOverlay();
 
                 if (widget.onDragEnd != null) {
-                  widget.onDragEnd?.call(hopCtr.videoPosition);
+                  widget.onDragEnd?.call(flutterExtendedCtr.videoPosition);
                 }
               },
               onTapDown: (TapDownDetails details) {
@@ -112,29 +112,29 @@ class _HopProgressBarState extends State<HopProgressBar> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: Padding(
-        padding: widget.hopProgressBarConfig.padding,
+        padding: widget.flutterExtendedProgressBarConfig.padding,
         child: SizedBox(
           width: size.maxWidth,
-          height: widget.hopProgressBarConfig.circleHandlerRadius,
+          height: widget.flutterExtendedProgressBarConfig.circleHandlerRadius,
           child: Align(
             alignment: widget.alignment,
-            child: GetBuilder<HopVideoPlayerGetXVideoController>(
+            child: GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
               tag: widget.tag,
               id: 'overlay',
-              builder: (hopCtr) => CustomPaint(
+              builder: (flutterExtendedCtr) => CustomPaint(
                 painter: _ProgressBarPainter(
                   videoPlayerValue!,
-                  hopProgressBarConfig: widget.hopProgressBarConfig.copyWith(
-                    circleHandlerRadius: hopCtr.isOverlayVisible ||
+                  flutterExtendedProgressBarConfig: widget.flutterExtendedProgressBarConfig.copyWith(
+                    circleHandlerRadius: flutterExtendedCtr.isOverlayVisible ||
                             widget
-                                .hopProgressBarConfig.alwaysVisibleCircleHandler
-                        ? widget.hopProgressBarConfig.circleHandlerRadius
+                                .flutterExtendedProgressBarConfig.alwaysVisibleCircleHandler
+                        ? widget.flutterExtendedProgressBarConfig.circleHandlerRadius
                         : 0,
                   ),
                 ),
                 size: Size(
                   double.maxFinite,
-                  widget.hopProgressBarConfig.height,
+                  widget.flutterExtendedProgressBarConfig.height,
                 ),
               ),
             ),
@@ -146,10 +146,10 @@ class _HopProgressBarState extends State<HopProgressBar> {
 }
 
 class _ProgressBarPainter extends CustomPainter {
-  _ProgressBarPainter(this.value, {this.hopProgressBarConfig});
+  _ProgressBarPainter(this.value, {this.flutterExtendedProgressBarConfig});
 
   VideoPlayerValue value;
-  HopProgressBarConfig? hopProgressBarConfig;
+  FlutterExtendedProgressBarConfig? flutterExtendedProgressBarConfig;
 
   @override
   bool shouldRepaint(CustomPainter painter) {
@@ -158,20 +158,20 @@ class _ProgressBarPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final double height = hopProgressBarConfig!.height;
+    final double height = flutterExtendedProgressBarConfig!.height;
     final double width = size.width;
-    final double curveRadius = hopProgressBarConfig!.curveRadius;
+    final double curveRadius = flutterExtendedProgressBarConfig!.curveRadius;
     final double circleHandlerRadius =
-        hopProgressBarConfig!.circleHandlerRadius;
+        flutterExtendedProgressBarConfig!.circleHandlerRadius;
     final Paint backgroundPaint =
-        hopProgressBarConfig!.getBackgroundPaint != null
-            ? hopProgressBarConfig!.getBackgroundPaint!(
+        flutterExtendedProgressBarConfig!.getBackgroundPaint != null
+            ? flutterExtendedProgressBarConfig!.getBackgroundPaint!(
                 width: width,
                 height: height,
                 circleHandlerRadius: circleHandlerRadius,
               )
             : Paint()
-        ..color = hopProgressBarConfig!.backgroundColor;
+        ..color = flutterExtendedProgressBarConfig!.backgroundColor;
           //..color = Colors.teal;
 
     canvas.drawRRect(
@@ -197,8 +197,8 @@ class _ProgressBarPainter extends CustomPainter {
       final double start = range.startFraction(value.duration) * width;
       final double end = range.endFraction(value.duration) * width;
 
-      final Paint bufferedPaint = hopProgressBarConfig!.getBufferedPaint != null
-          ? hopProgressBarConfig!.getBufferedPaint!(
+      final Paint bufferedPaint = flutterExtendedProgressBarConfig!.getBufferedPaint != null
+          ? flutterExtendedProgressBarConfig!.getBufferedPaint!(
               width: width,
               height: height,
               playedPart: playedPart,
@@ -207,7 +207,7 @@ class _ProgressBarPainter extends CustomPainter {
               bufferedEnd: end,
             )
           : Paint()
-        ..color = hopProgressBarConfig!.bufferedBarColor;
+        ..color = flutterExtendedProgressBarConfig!.bufferedBarColor;
 
       canvas.drawRRect(
         RRect.fromRectAndRadius(
@@ -221,15 +221,15 @@ class _ProgressBarPainter extends CustomPainter {
       );
     }
 
-    final Paint playedPaint = hopProgressBarConfig!.getPlayedPaint != null
-        ? hopProgressBarConfig!.getPlayedPaint!(
+    final Paint playedPaint = flutterExtendedProgressBarConfig!.getPlayedPaint != null
+        ? flutterExtendedProgressBarConfig!.getPlayedPaint!(
             width: width,
             height: height,
             playedPart: playedPart,
             circleHandlerRadius: circleHandlerRadius,
           )
         : Paint()
-      ..color = hopProgressBarConfig!.playingBarColor;
+      ..color = flutterExtendedProgressBarConfig!.playingBarColor;
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromPoints(
@@ -242,15 +242,15 @@ class _ProgressBarPainter extends CustomPainter {
     );
 
     final Paint handlePaint =
-        hopProgressBarConfig!.getCircleHandlerPaint != null
-            ? hopProgressBarConfig!.getCircleHandlerPaint!(
+        flutterExtendedProgressBarConfig!.getCircleHandlerPaint != null
+            ? flutterExtendedProgressBarConfig!.getCircleHandlerPaint!(
                 width: width,
                 height: height,
                 playedPart: playedPart,
                 circleHandlerRadius: circleHandlerRadius,
               )
             : Paint()
-          ..color = hopProgressBarConfig!.circleHandlerColor;
+          ..color = flutterExtendedProgressBarConfig!.circleHandlerColor;
 
     canvas.drawCircle(
       Offset(playedPart, height / 2),

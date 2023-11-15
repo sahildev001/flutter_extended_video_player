@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/hop_getx_video_controller.dart';
+import '../controllers/flutter_extended_getx_video_controller.dart';
 import 'doubble_tap_effect.dart';
 
 class DoubleTapIcon extends StatefulWidget {
@@ -44,24 +44,24 @@ class _DoubleTapIconState extends State<DoubleTapIcon>
         curve: Curves.easeInOut,
       ),
     );
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: widget.tag);
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: widget.tag);
     if (widget.iconOnly && !widget.isForward) {
-      hopCtr.addListenerId('double-tap-left', _onDoubleTap);
+      flutterExtendedCtr.addListenerId('double-tap-left', _onDoubleTap);
     }
     if (widget.iconOnly && widget.isForward) {
-      hopCtr.addListenerId('double-tap-right', _onDoubleTap);
+      flutterExtendedCtr.addListenerId('double-tap-right', _onDoubleTap);
     }
   }
 
   @override
   void dispose() {
-    final hopCtr = Get.find<HopVideoPlayerGetXVideoController>(tag: widget.tag);
+    final flutterExtendedCtr = Get.find<FlutterExtendedVideoPlayerGetXVideoController>(tag: widget.tag);
 
     if (widget.iconOnly && !widget.isForward) {
-      hopCtr.removeListenerId('double-tap-left', _onDoubleTap);
+      flutterExtendedCtr.removeListenerId('double-tap-left', _onDoubleTap);
     }
     if (widget.iconOnly && widget.isForward) {
-      hopCtr.removeListenerId('double-tap-right', _onDoubleTap);
+      flutterExtendedCtr.removeListenerId('double-tap-right', _onDoubleTap);
     }
     _animationController.dispose();
     super.dispose();
@@ -143,16 +143,16 @@ class _DoubleTapIconState extends State<DoubleTapIcon>
                     ],
                   ),
                 ),
-                GetBuilder<HopVideoPlayerGetXVideoController>(
+                GetBuilder<FlutterExtendedVideoPlayerGetXVideoController>(
                   tag: widget.tag,
                   id: 'double-tap',
-                  builder: (hopCtr) {
-                    if (widget.isForward && hopCtr.isRightDbTapIconVisible) {
+                  builder: (flutterExtendedCtr) {
+                    if (widget.isForward && flutterExtendedCtr.isRightDbTapIconVisible) {
                       return AnimatedOpacity(
                         duration: const Duration(milliseconds: 300),
                         opacity: opacityCtr.value,
                         child: Text(
-                          '${hopCtr.isLeftDbTapIconVisible ? hopCtr.leftDoubleTapduration : hopCtr.rightDubleTapduration} Sec',
+                          '${flutterExtendedCtr.isLeftDbTapIconVisible ? flutterExtendedCtr.leftDoubleTapduration : flutterExtendedCtr.rightDubleTapduration} Sec',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -160,12 +160,12 @@ class _DoubleTapIconState extends State<DoubleTapIcon>
                         ),
                       );
                     }
-                    if (!widget.isForward && hopCtr.isLeftDbTapIconVisible) {
+                    if (!widget.isForward && flutterExtendedCtr.isLeftDbTapIconVisible) {
                       return AnimatedOpacity(
                         duration: const Duration(milliseconds: 300),
                         opacity: opacityCtr.value,
                         child: Text(
-                          '${hopCtr.isLeftDbTapIconVisible ? hopCtr.leftDoubleTapduration : hopCtr.rightDubleTapduration} Sec',
+                          '${flutterExtendedCtr.isLeftDbTapIconVisible ? flutterExtendedCtr.leftDoubleTapduration : flutterExtendedCtr.rightDubleTapduration} Sec',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
